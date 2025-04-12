@@ -1,0 +1,266 @@
+/* Base styles */
+
+/* Apply the animation on .login-container */
+.login-container {
+  display: flex;
+  min-height: 80vh;
+  background-color: #ffffff;
+  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+  animation: backgroundAnimation 4s infinite; /* Add animation */
+  height: 617px; /* Set fixed height */
+}
+
+/* Define the keyframes for the background and text color change */
+@keyframes backgroundAnimation {
+  0% {
+    background-color: #ffffff; /* Initial background color */
+    color: #000000; /* Initial text color */
+  }
+  25% {
+    background-color: #f39c12; /* Change to orange */
+    color: #ffffff; /* Text color changes to white */
+  }
+  50% {
+    background-color: #16a085; /* Change to teal */
+    color: #ffffff; /* Text color stays white */
+  }
+  75% {
+    background-color: #8e44ad; /* Change to purple */
+    color: #ffffff; /* Text color stays white */
+  }
+  100% {
+    background-color: #ffffff; /* Return to initial color */
+    color: #000000; /* Return to initial text color */
+  }
+}
+
+.login-left {
+  flex: 1;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url('/assets/ss.png') center/cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: white;
+  text-align: center;
+  
+}
+
+.welcome-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-text p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Login right container */
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  transition: background-color 0.5s ease;
+}
+
+/* Login image */
+.login-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.login-box {
+  width: 100%;
+  height: "100%";
+  max-height: 500px; /* Set a max height for the box */ 
+  max-width: 400px;
+  padding: 2rem;
+  border: 0.1px solid #f1eded;
+  background: rgb(247, 244, 244);
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  position: relative; /* Ensure the button is positioned relative to this */
+}
+
+.login-box h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+/* Form and button styling */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #f9f9f9;
+  color: #2c3e50;
+  margin-left: -4px;
+  margin-right: 12px;
+  font-size: 1rem;
+  border: 1px solid #cfbfbf;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #e67e22;
+  outline: none;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-password {
+  color: #e67e22;
+  text-decoration: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #d35400;
+}
+
+.social-login {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.social-login p {
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-buttons button {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.social-buttons button:hover {
+  background-color: #f5f5f5;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #777;
+}
+
+.signup-link a {
+  color: #e67e22;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Dark Mode Styles */
+.login-container.dark {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.login-left.dark {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('/books-background.jpg') center/cover;
+}
+
+.login-right.dark {
+  background-color: #34495e;
+}
+
+.login-box.dark {
+  background-color: #34495e;
+  color: white;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: absolute;
+  top: 0px; /* Adjust to your preference */
+  right: -10px; /* Adjust to your preference */
+  background: none;
+  border: none;
+  color: #e67e22;
+  font-size: 2rem;
+  cursor: pointer;;
+}
+
+.theme-toggle-btn:hover {
+  color: #d35400;
+}
+
+.theme-toggle-btn:focus {
+  outline: none; /* Remove the default outline */
+  box-shadow: 0 0 0px rgba(255, 255, 255, 0.4); /* Custom focus effect (e.g., orange glow) */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left {
+    min-height: 200px;
+  }
+
+  .welcome-text h1 {
+    font-size: 2rem;
+  }
+
+  .login-box {
+    padding: 1.5rem;
+  }
+
+  .theme-toggle-btn {
+    top: 15px;
+    right: 15px; /* Adjust for mobile responsiveness */
+  }
+}
