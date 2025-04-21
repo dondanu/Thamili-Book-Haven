@@ -1,30 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// Import local placeholder images (you should replace these with your actual images)
+import bannerPlaceholder from './assets/banner-placeholder.jpg';
+import bookPlaceholder1 from './assets/book-placeholder1.jpg';
+import bookPlaceholder2 from './assets/book-placeholder2.jpg';
+import bookPlaceholder3 from './assets/book-placeholder3.jpg';
+import bookPlaceholder4 from './assets/book-placeholder4.jpg';
+import bookPlaceholder5 from './assets/book-placeholder5.jpg';
+import authorPlaceholder from './assets/author-placeholder.jpg';
+import offerPlaceholder1 from './assets/offer-placeholder1.jpg';
+import offerPlaceholder2 from './assets/offer-placeholder2.jpg';
+
 const Home = () => {
-  // Sample data for the page
+  // Sample data for the page using local images
   const featuredBooks = [
-    { id: 1, title: "The Midnight Library", author: "Matt Haig", price: "$14.99", image: "https://via.placeholder.com/150x200?text=Midnight+Library" },
-    { id: 2, title: "Project Hail Mary", author: "Andy Weir", price: "$18.99", image: "https://via.placeholder.com/150x200?text=Project+Hail+Mary" },
-    { id: 3, title: "Where the Crawdads Sing", author: "Delia Owens", price: "$12.99", image: "https://via.placeholder.com/150x200?text=Where+Crawdads+Sing" }
+    { id: 1, title: "The Midnight Library", author: "Matt Haig", price: "$14.99", image: bookPlaceholder1 },
+    { id: 2, title: "Project Hail Mary", author: "Andy Weir", price: "$18.99", image: bookPlaceholder2 },
+    { id: 3, title: "Where the Crawdads Sing", author: "Delia Owens", price: "$12.99", image: bookPlaceholder3 }
   ];
 
   const newArrivals = [
-    { id: 4, title: "The Paris Apartment", author: "Lucy Foley", price: "$16.99", image: "https://via.placeholder.com/120x180?text=Paris+Apartment" },
-    { id: 5, title: "Sea of Tranquility", author: "Emily St. John Mandel", price: "$15.99", image: "https://via.placeholder.com/120x180?text=Sea+of+Tranquility" },
-    { id: 6, title: "Book Lovers", author: "Emily Henry", price: "$13.99", image: "https://via.placeholder.com/120x180?text=Book+Lovers" },
-    { id: 7, title: "The Maid", author: "Nita Prose", price: "$14.99", image: "https://via.placeholder.com/120x180?text=The+Maid" }
+    { id: 4, title: "The Paris Apartment", author: "Lucy Foley", price: "$16.99", image: bookPlaceholder1 },
+    { id: 5, title: "Sea of Tranquility", author: "Emily St. John Mandel", price: "$15.99", image: bookPlaceholder2 },
+    { id: 6, title: "Book Lovers", author: "Emily Henry", price: "$13.99", image: bookPlaceholder3 },
+    { id: 7, title: "The Maid", author: "Nita Prose", price: "$14.99", image: bookPlaceholder4 }
   ];
 
   const bestsellers = [
-    { id: 8, title: "It Ends With Us", author: "Colleen Hoover", price: "$11.99", rating: 4.8, image: "https://via.placeholder.com/120x180?text=It+Ends+With+Us" },
-    { id: 9, title: "Atomic Habits", author: "James Clear", price: "$17.99", rating: 4.9, image: "https://via.placeholder.com/120x180?text=Atomic+Habits" },
-    { id: 10, title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", price: "$12.99", rating: 4.7, image: "https://via.placeholder.com/120x180?text=Evelyn+Hugo" }
+    { id: 8, title: "It Ends With Us", author: "Colleen Hoover", price: "$11.99", rating: 4.8, image: bookPlaceholder1 },
+    { id: 9, title: "Atomic Habits", author: "James Clear", price: "$17.99", rating: 4.9, image: bookPlaceholder2 },
+    { id: 10, title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", price: "$12.99", rating: 4.7, image: bookPlaceholder3 }
   ];
 
   const specialOffers = [
-    { id: 11, title: "Buy 2 Get 1 Free", description: "On all fiction books", image: "https://via.placeholder.com/300x150?text=Buy+2+Get+1+Free" },
-    { id: 12, title: "30% Off", description: "Classic literature collection", image: "https://via.placeholder.com/300x150?text=30%+Off+Classics" }
+    { id: 11, title: "Buy 2 Get 1 Free", description: "On all fiction books", image: offerPlaceholder1 },
+    { id: 12, title: "30% Off", description: "Classic literature collection", image: offerPlaceholder2 }
   ];
 
   return (
@@ -78,7 +89,7 @@ const Home = () => {
         position: 'relative', 
         height: '500px', 
         backgroundColor: '#f5f5f5',
-        backgroundImage: 'url(https://via.placeholder.com/1200x500?text=Discover+Your+Next+Favorite+Book)',
+        backgroundImage: `url(${bannerPlaceholder})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
@@ -308,9 +319,9 @@ const Home = () => {
           textAlign: 'left'
         }}>
           <img 
-            src="https://via.placeholder.com/200x250?text=Author+Photo" 
+            src={authorPlaceholder}
             alt="Author of the Month" 
-            style={{ borderRadius: '5px' }}
+            style={{ borderRadius: '5px', width: '200px', height: '250px', objectFit: 'cover' }}
           />
           <div>
             <h3 style={{ fontSize: '28px', marginBottom: '10px' }}>Margaret Atwood</h3>
