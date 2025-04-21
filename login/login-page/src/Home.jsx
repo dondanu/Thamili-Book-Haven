@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Import local placeholder images (you should replace these with your actual images)
@@ -13,6 +13,11 @@ import offerPlaceholder1 from './assets/offer-placeholder1.jpg';
 import offerPlaceholder2 from './assets/offer-placeholder2.jpg';
 
 const Home = () => {
+  // State for accessibility options
+  const [darkMode, setDarkMode] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
+  const [language, setLanguage] = useState('English');
+
   // Sample data for the page using local images
   const featuredBooks = [
     { id: 1, title: "The Midnight Library", author: "Matt Haig", price: "$14.99", image: bookPlaceholder1 },
@@ -38,15 +43,52 @@ const Home = () => {
     { id: 12, title: "30% Off", description: "Classic literature collection", image: offerPlaceholder2 }
   ];
 
+  // Handlers for accessibility options
+  const increaseFontSize = () => {
+    if (fontSize < 24) {
+      setFontSize(fontSize + 2);
+    }
+  };
+
+  const decreaseFontSize = () => {
+    if (fontSize > 12) {
+      setFontSize(fontSize - 2);
+    }
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
+  // Dynamic styles based on state
+  const themeStyles = {
+    backgroundColor: darkMode ? '#1a1a1a' : 'white',
+    color: darkMode ? '#f0f0f0' : '#333',
+    fontSize: `${fontSize}px`,
+    minHeight: '100vh',
+    transition: 'all 0.3s ease'
+  };
+
+  const headerFooterBg = darkMode ? '#121212' : '#2c3e50';
+  const sectionBg = darkMode ? '#2d2d2d' : '#f8f9fa';
+  const cardBg = darkMode ? '#3d3d3d' : 'white';
+  const textColor = darkMode ? '#f0f0f0' : '#333';
+  const secondaryTextColor = darkMode ? '#b0b0b0' : '#666';
+  const buttonBg = darkMode ? '#e74c3c' : '#2c3e50';
+
   return (
-    <div style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", color: "#333" }}>
+    <div style={themeStyles}>
       {/* Header/Navigation */}
       <header style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px',
-        backgroundColor: '#2c3e50',
+        backgroundColor: headerFooterBg,
         color: 'white',
         position: 'sticky',
         top: 0,
@@ -72,7 +114,8 @@ const Home = () => {
               borderRadius: '20px', 
               border: 'none', 
               marginRight: '15px',
-              width: '250px'
+              width: '250px',
+              fontSize: `${fontSize}px`
             }} 
           />
           <Link to="/cart" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>
@@ -126,8 +169,8 @@ const Home = () => {
       </section>
 
       {/* Featured Categories */}
-      <section style={{ padding: '40px 20px', backgroundColor: 'white' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>Book Categories</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: sectionBg }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>Book Categories</h2>
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -137,13 +180,14 @@ const Home = () => {
           {['Fiction', 'Non-fiction', 'Mystery', 'Romance', 'Science', 'Fantasy', 'Biography', 'History'].map(category => (
             <div key={category} style={{
               padding: '15px 30px',
-              backgroundColor: '#f8f9fa',
+              backgroundColor: cardBg,
               borderRadius: '30px',
               fontSize: '18px',
               cursor: 'pointer',
               transition: 'all 0.3s',
+              color: textColor,
               ':hover': {
-                backgroundColor: '#e74c3c',
+                backgroundColor: buttonBg,
                 color: 'white'
               }
             }}>{category}</div>
@@ -152,8 +196,8 @@ const Home = () => {
       </section>
 
       {/* New Arrivals */}
-      <section style={{ padding: '40px 20px', backgroundColor: '#f8f9fa' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>New Arrivals</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: sectionBg }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>New Arrivals</h2>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
@@ -163,7 +207,7 @@ const Home = () => {
         }}>
           {newArrivals.map(book => (
             <div key={book.id} style={{
-              backgroundColor: 'white',
+              backgroundColor: cardBg,
               borderRadius: '8px',
               overflow: 'hidden',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
@@ -174,13 +218,13 @@ const Home = () => {
             }}>
               <img src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <div style={{ padding: '15px' }}>
-                <h3 style={{ margin: '0 0 5px', fontSize: '18px' }}>{book.title}</h3>
-                <p style={{ margin: '0 0 10px', color: '#666' }}>{book.author}</p>
-                <p style={{ margin: '0 0 15px', fontWeight: 'bold' }}>{book.price}</p>
+                <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor }}>{book.title}</h3>
+                <p style={{ margin: '0 0 10px', color: secondaryTextColor }}>{book.author}</p>
+                <p style={{ margin: '0 0 15px', fontWeight: 'bold', color: textColor }}>{book.price}</p>
                 <button style={{
                   width: '100%',
                   padding: '10px',
-                  backgroundColor: '#2c3e50',
+                  backgroundColor: buttonBg,
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
@@ -193,8 +237,8 @@ const Home = () => {
       </section>
 
       {/* Bestsellers Section */}
-      <section style={{ padding: '40px 20px', backgroundColor: 'white' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>Bestsellers</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: darkMode ? '#1a1a1a' : 'white' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>Bestsellers</h2>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
@@ -204,7 +248,7 @@ const Home = () => {
         }}>
           {bestsellers.map(book => (
             <div key={book.id} style={{
-              backgroundColor: '#f8f9fa',
+              backgroundColor: cardBg,
               borderRadius: '8px',
               overflow: 'hidden',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
@@ -222,19 +266,19 @@ const Home = () => {
               }}>Bestseller</div>
               <img src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <div style={{ padding: '15px' }}>
-                <h3 style={{ margin: '0 0 5px', fontSize: '18px' }}>{book.title}</h3>
-                <p style={{ margin: '0 0 10px', color: '#666' }}>{book.author}</p>
+                <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor }}>{book.title}</h3>
+                <p style={{ margin: '0 0 10px', color: secondaryTextColor }}>{book.author}</p>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                   {[...Array(5)].map((_, i) => (
                     <span key={i} style={{ color: i < Math.floor(book.rating) ? '#f39c12' : '#ddd', fontSize: '20px' }}>★</span>
                   ))}
-                  <span style={{ marginLeft: '5px', fontSize: '14px' }}>{book.rating}</span>
+                  <span style={{ marginLeft: '5px', fontSize: '14px', color: secondaryTextColor }}>{book.rating}</span>
                 </div>
-                <p style={{ margin: '0 0 15px', fontWeight: 'bold' }}>{book.price}</p>
+                <p style={{ margin: '0 0 15px', fontWeight: 'bold', color: textColor }}>{book.price}</p>
                 <button style={{
                   width: '100%',
                   padding: '10px',
-                  backgroundColor: '#e74c3c',
+                  backgroundColor: buttonBg,
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
@@ -247,8 +291,8 @@ const Home = () => {
       </section>
 
       {/* Special Offers */}
-      <section style={{ padding: '40px 20px', backgroundColor: '#f8f9fa' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>Special Offers</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: sectionBg }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>Special Offers</h2>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -258,7 +302,7 @@ const Home = () => {
         }}>
           {specialOffers.map(offer => (
             <div key={offer.id} style={{
-              backgroundColor: 'white',
+              backgroundColor: cardBg,
               borderRadius: '8px',
               overflow: 'hidden',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
@@ -267,10 +311,10 @@ const Home = () => {
               <img src={offer.image} alt={offer.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <div style={{ padding: '20px', textAlign: 'center' }}>
                 <h3 style={{ margin: '0 0 10px', fontSize: '24px', color: '#e74c3c' }}>{offer.title}</h3>
-                <p style={{ margin: '0 0 15px', fontSize: '16px' }}>{offer.description}</p>
+                <p style={{ margin: '0 0 15px', fontSize: '16px', color: textColor }}>{offer.description}</p>
                 <button style={{
                   padding: '10px 20px',
-                  backgroundColor: '#2c3e50',
+                  backgroundColor: buttonBg,
                   color: 'white',
                   border: 'none',
                   borderRadius: '5px',
@@ -283,8 +327,8 @@ const Home = () => {
       </section>
 
       {/* Personalized Recommendations */}
-      <section style={{ padding: '40px 20px', backgroundColor: 'white' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>Recommended For You</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: darkMode ? '#1a1a1a' : 'white' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>Recommended For You</h2>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
@@ -295,8 +339,8 @@ const Home = () => {
           {[...newArrivals].slice(0, 4).map(book => (
             <div key={book.id} style={{ textAlign: 'center' }}>
               <img src={book.image} alt={book.title} style={{ width: '120px', height: '180px', objectFit: 'cover', marginBottom: '10px' }} />
-              <h3 style={{ margin: '0 0 5px', fontSize: '16px' }}>{book.title}</h3>
-              <p style={{ margin: '0 0 10px', color: '#666', fontSize: '14px' }}>{book.author}</p>
+              <h3 style={{ margin: '0 0 5px', fontSize: '16px', color: textColor }}>{book.title}</h3>
+              <p style={{ margin: '0 0 10px', color: secondaryTextColor, fontSize: '14px' }}>{book.author}</p>
             </div>
           ))}
         </div>
@@ -305,7 +349,7 @@ const Home = () => {
       {/* Author of the Month */}
       <section style={{ 
         padding: '40px 20px', 
-        backgroundColor: '#2c3e50',
+        backgroundColor: headerFooterBg,
         color: 'white',
         textAlign: 'center'
       }}>
@@ -342,8 +386,8 @@ const Home = () => {
       </section>
 
       {/* Gift Cards */}
-      <section style={{ padding: '40px 20px', backgroundColor: '#f8f9fa', textAlign: 'center' }}>
-        <h2 style={{ marginBottom: '30px', fontSize: '32px' }}>Gift Cards</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: sectionBg, textAlign: 'center' }}>
+        <h2 style={{ marginBottom: '30px', fontSize: '32px', color: textColor }}>Gift Cards</h2>
         <div style={{ 
           display: 'flex',
           justifyContent: 'center',
@@ -352,17 +396,17 @@ const Home = () => {
           margin: '0 auto'
         }}>
           <div style={{ 
-            backgroundColor: 'white',
+            backgroundColor: cardBg,
             padding: '20px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
             width: '250px'
           }}>
             <h3 style={{ color: '#e74c3c', marginBottom: '15px' }}>Physical Gift Card</h3>
-            <p style={{ marginBottom: '20px' }}>Beautifully designed card shipped to you or your recipient</p>
+            <p style={{ marginBottom: '20px', color: textColor }}>Beautifully designed card shipped to you or your recipient</p>
             <button style={{
               padding: '8px 15px',
-              backgroundColor: '#2c3e50',
+              backgroundColor: buttonBg,
               color: 'white',
               border: 'none',
               borderRadius: '5px',
@@ -370,17 +414,17 @@ const Home = () => {
             }}>Buy Now</button>
           </div>
           <div style={{ 
-            backgroundColor: 'white',
+            backgroundColor: cardBg,
             padding: '20px',
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
             width: '250px'
           }}>
             <h3 style={{ color: '#e74c3c', marginBottom: '15px' }}>E-Gift Card</h3>
-            <p style={{ marginBottom: '20px' }}>Instant delivery via email for last-minute gifts</p>
+            <p style={{ marginBottom: '20px', color: textColor }}>Instant delivery via email for last-minute gifts</p>
             <button style={{
               padding: '8px 15px',
-              backgroundColor: '#2c3e50',
+              backgroundColor: buttonBg,
               color: 'white',
               border: 'none',
               borderRadius: '5px',
@@ -391,8 +435,8 @@ const Home = () => {
       </section>
 
       {/* Events Section */}
-      <section style={{ padding: '40px 20px', backgroundColor: 'white' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px' }}>Upcoming Events</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: darkMode ? '#1a1a1a' : 'white' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>Upcoming Events</h2>
         <div style={{ 
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -406,17 +450,17 @@ const Home = () => {
             { id: 3, title: "Book Signing: Local Authors", date: "June 22, 2023", time: "2:00 PM" }
           ].map(event => (
             <div key={event.id} style={{
-              backgroundColor: '#f8f9fa',
+              backgroundColor: cardBg,
               padding: '20px',
               borderRadius: '8px',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
             }}>
               <h3 style={{ margin: '0 0 10px', color: '#e74c3c' }}>{event.title}</h3>
-              <p style={{ margin: '0 0 5px' }}>{event.date}</p>
-              <p style={{ margin: '0 0 15px' }}>{event.time}</p>
+              <p style={{ margin: '0 0 5px', color: textColor }}>{event.date}</p>
+              <p style={{ margin: '0 0 15px', color: textColor }}>{event.time}</p>
               <button style={{
                 padding: '8px 15px',
-                backgroundColor: '#2c3e50',
+                backgroundColor: buttonBg,
                 color: 'white',
                 border: 'none',
                 borderRadius: '5px',
@@ -428,8 +472,8 @@ const Home = () => {
       </section>
 
       {/* Customer Reviews */}
-      <section style={{ padding: '40px 20px', backgroundColor: '#f8f9fa', textAlign: 'center' }}>
-        <h2 style={{ marginBottom: '30px', fontSize: '32px' }}>What Our Customers Say</h2>
+      <section style={{ padding: '40px 20px', backgroundColor: sectionBg, textAlign: 'center' }}>
+        <h2 style={{ marginBottom: '30px', fontSize: '32px', color: textColor }}>What Our Customers Say</h2>
         <div style={{ 
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -443,7 +487,7 @@ const Home = () => {
             { id: 3, name: "Emma R.", review: "Found so many unique books here that I couldn't find anywhere else. Highly recommend!", rating: 5 }
           ].map(review => (
             <div key={review.id} style={{
-              backgroundColor: 'white',
+              backgroundColor: cardBg,
               padding: '25px',
               borderRadius: '8px',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
@@ -453,8 +497,8 @@ const Home = () => {
                   <span key={i} style={{ color: i < review.rating ? '#f39c12' : '#ddd', fontSize: '24px' }}>★</span>
                 ))}
               </div>
-              <p style={{ fontStyle: 'italic', marginBottom: '15px' }}>"{review.review}"</p>
-              <p style={{ fontWeight: 'bold' }}>- {review.name}</p>
+              <p style={{ fontStyle: 'italic', marginBottom: '15px', color: textColor }}>"{review.review}"</p>
+              <p style={{ fontWeight: 'bold', color: textColor }}>- {review.name}</p>
             </div>
           ))}
         </div>
@@ -462,7 +506,7 @@ const Home = () => {
 
       {/* Footer */}
       <footer style={{ 
-        backgroundColor: '#2c3e50',
+        backgroundColor: headerFooterBg,
         color: 'white',
         padding: '40px 20px',
         textAlign: 'center'
@@ -499,7 +543,8 @@ const Home = () => {
                   padding: '10px',
                   border: 'none',
                   borderRadius: '5px 0 0 5px',
-                  flex: 1
+                  flex: 1,
+                  fontSize: `${fontSize}px`
                 }} 
               />
               <button style={{
@@ -542,7 +587,8 @@ const Home = () => {
         justifyContent: 'center',
         fontSize: '24px',
         cursor: 'pointer',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.3)'
+        boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+        zIndex: 100
       }}>
         💬
       </div>
@@ -552,56 +598,68 @@ const Home = () => {
         position: 'fixed',
         bottom: '30px',
         left: '30px',
-        backgroundColor: '#2c3e50',
+        backgroundColor: headerFooterBg,
         color: 'white',
         padding: '10px',
         borderRadius: '5px',
         display: 'flex',
-        gap: '10px'
+        gap: '10px',
+        zIndex: 100
       }}>
-        <button style={{
-          padding: '5px 10px',
-          backgroundColor: '#34495e',
-          color: 'white',
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}>A+</button>
-        <button style={{
-          padding: '5px 10px',
-          backgroundColor: '#34495e',
-          color: 'white',
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}>A-</button>
-        <button style={{
-          padding: '5px 10px',
-          backgroundColor: '#34495e',
-          color: 'white',
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}>☀️</button>
-        <button style={{
-          padding: '5px 10px',
-          backgroundColor: '#34495e',
-          color: 'white',
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}>🌙</button>
-        <select style={{
-          padding: '5px',
-          backgroundColor: '#34495e',
-          color: 'white',
-          border: 'none',
-          borderRadius: '3px',
-          cursor: 'pointer'
-        }}>
-          <option>English</option>
-          <option>Español</option>
-          <option>Français</option>
+        <button 
+          onClick={increaseFontSize}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#34495e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '3px',
+            cursor: 'pointer'
+          }}
+        >
+          A+
+        </button>
+        <button 
+          onClick={decreaseFontSize}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#34495e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '3px',
+            cursor: 'pointer'
+          }}
+        >
+          A-
+        </button>
+        <button 
+          onClick={toggleDarkMode}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#34495e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '3px',
+            cursor: 'pointer'
+          }}
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+        <select 
+          value={language}
+          onChange={handleLanguageChange}
+          style={{
+            padding: '5px',
+            backgroundColor: '#34495e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '3px',
+            cursor: 'pointer'
+          }}
+        >
+          <option value="English">English</option>
+          <option value="Español">Español</option>
+          <option value="Français">Français</option>
         </select>
       </div>
     </div>
