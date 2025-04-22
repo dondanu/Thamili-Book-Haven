@@ -236,13 +236,13 @@ const Home = () => {
   const bestsellers = [
     { id: 8, title: "Yarukku eppadi eluthuvathu", author: "Isai Gani Ilataraja", price: "$11.99", rating: 4.8, image: bookPlaceholder7 },
     { id: 9, title: "Vennira Iravugal", author: "Piyothat Thasthaveskyr", price: "$17.99", rating: 4.9, image: bookPlaceholder8 },
-    { id: 10, title: "Thurupidicha Gapaka Kurippukal", author: "Valipokkan", price: "$12.99", rating: 4.7, image: bookPlaceholder9 },
+    { id: 10, title: "Thurupidicha G Kurippukal", author: "Valipokkan", price: "$12.99", rating: 4.7, image: bookPlaceholder9 },
     { id: 11, title: "Ariyappadatha Thamilagam", author: "A Ra Venkadachalapathy", price: "$11.99", rating: 4.8, image: bookPlaceholder10 }
   ];
 
   const specialOffers = [
-    { id: 11, title: "Buy 2 Get 1 Free", description: "On all fiction books", image: offerPlaceholder3 },
-    { id: 12, title: "30% Off", description: "Classic literature collection", image: offerPlaceholder4 }
+    { id: 11, title: "Buy 2 Get 1 Free", description: "Na Mu fiction books", image: offerPlaceholder3 },
+    { id: 12, title: "30% Off", description: "Telungu literature collection", image: offerPlaceholder4 }
   ];
 
   // Handlers
@@ -609,11 +609,11 @@ const Home = () => {
             style={{ borderRadius: '5px', width: '200px', height: '250px', objectFit: 'cover' }}
           />
           <div>
-            <h3 style={{ fontSize: '28px', marginBottom: '10px' }}>Margaret Atwood</h3>
+            <h3 style={{ fontSize: '28px', marginBottom: '10px' }}>M G Ramachandran</h3>
             <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '20px' }}>
-              {translations[language].language === 'ta' 
+              {translations[language].language === 'en' 
                 ? `The acclaimed author of "The Handmaid's Tale" and "Alias Grace" joins us this month for an exclusive interview.`
-                : 'பிரபல எழுத்தாளர் மார்கரெட் அட்வுட் இந்த மாதம் நமது சிறப்பு நேர்காணலில் பங்கேற்கிறார்.'}
+                : `The acclaimed author of "Maruthoor Gobalakirusnapillai Ramachanthiran" joins us this month for an exclusive interview.`}
             </p>
             <button style={{
               padding: '10px 20px',
@@ -700,9 +700,9 @@ const Home = () => {
           margin: '0 auto'
         }}>
           {[
-            { id: 1, title: "Author Talk: New Science Fiction", date: "June 15, 2023", time: "6:00 PM" },
-            { id: 2, title: "Children's Story Hour", date: "June 18, 2023", time: "10:00 AM" },
-            { id: 3, title: "Book Signing: Local Authors", date: "June 22, 2023", time: "2:00 PM" }
+            { id: 1, title: "Author Talk: New Science Fiction", date: "June 15, 2025", time: "6:00 PM" },
+            { id: 2, title: "Children's Story Hour", date: "June 18, 2025", time: "10:00 AM" },
+            { id: 3, title: "Book Signing: Local Authors", date: "June 22, 2025", time: "2:00 PM" }
           ].map(event => (
             <div key={event.id} style={{
               backgroundColor: cardBg,
