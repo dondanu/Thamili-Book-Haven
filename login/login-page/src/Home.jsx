@@ -19,9 +19,12 @@ import bookPlaceholder13 from './assets/book-placeholder13.png';
 import bookPlaceholder14 from './assets/book-placeholder14.png';
 
 
-import authorPlaceholder from './assets/author-placeholder.jpg';
+import authorPlaceholder from './assets/author-placeholder1.png';
 import offerPlaceholder1 from './assets/offer-placeholder1.jpg';
 import offerPlaceholder2 from './assets/offer-placeholder2.jpg';
+import offerPlaceholder3 from './assets/offer-placeholder3.png';
+import offerPlaceholder4 from './assets/offer-placeholder4.png';
+
 
 // Translations object
 const translations = {
@@ -217,28 +220,29 @@ const Home = () => {
 
   // Sample data
   const featuredBooks = [
-    { id: 1, title: "The Midnight Library", author: "Matt Haig", price: "$14.99", image: bookPlaceholder1 },
-    { id: 2, title: "Project Hail Mary", author: "Andy Weir", price: "$18.99", image: bookPlaceholder2 },
-    { id: 3, title: "Where the Crawdads Sing", author: "Delia Owens", price: "$12.99", image: bookPlaceholder3 }
+    { id: 1, title: "Kathirungal Kathalippom", author: "Madurai Iramakirusnan", price: "$14.99", image: bookPlaceholder11 },
+    { id: 2, title: "ANANDA YAZH", author: "Na Muthukumar", price: "$18.99", image: bookPlaceholder12 },
+    { id: 3, title: "Anantha yalai meedukiraai", author: "Amuthavalli", price: "$12.99", image: bookPlaceholder13 },
+    { id: 4, title: "Kan pesum varthaikal", author: "Na Muthukumar", price: "$12.99", image: bookPlaceholder14 }
   ];
 
   const newArrivals = [
-    { id: 4, title: "The Paris Apartment", author: "Lucy Foley", price: "$16.99", image: bookPlaceholder1 },
-    { id: 5, title: "Sea of Tranquility", author: "Emily St. John Mandel", price: "$15.99", image: bookPlaceholder2 },
-    { id: 6, title: "Book Lovers", author: "Emily Henry", price: "$13.99", image: bookPlaceholder3 },
-    { id: 7, title: "The Maid", author: "Nita Prose", price: "$14.99", image: bookPlaceholder4 }
+    { id: 4, title: "ANILAADUM MUNDRIL", author: "Na Muthukumar", price: "$16.99", image: bookPlaceholder1 },
+    { id: 5, title: "MGR oru Sakaptham", author: "Barathirja", price: "$15.99", image: bookPlaceholder2 },
+    { id: 6, title: "Marakkave Ninaikiren", author: "Maari Selvaraj", price: "$13.99", image: bookPlaceholder3 },
+    { id: 7, title: "7g Rainbow Colony", author: "Selvaragavan", price: "$14.99", image: bookPlaceholder4 }
   ];
 
   const bestsellers = [
-    { id: 8, title: "It Ends With Us", author: "Colleen Hoover", price: "$11.99", rating: 4.8, image: bookPlaceholder7 },
-    { id: 9, title: "Atomic Habits", author: "James Clear", price: "$17.99", rating: 4.9, image: bookPlaceholder8 },
-    { id: 10, title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", price: "$12.99", rating: 4.7, image: bookPlaceholder9 },
-    { id: 11, title: "hmjghj", author: "Colleen Hoover", price: "$11.99", rating: 4.8, image: bookPlaceholder10 }
+    { id: 8, title: "Yarukku eppadi eluthuvathu", author: "Isai Gani Ilataraja", price: "$11.99", rating: 4.8, image: bookPlaceholder7 },
+    { id: 9, title: "Vennira Iravugal", author: "Piyothat Thasthaveskyr", price: "$17.99", rating: 4.9, image: bookPlaceholder8 },
+    { id: 10, title: "Thurupidicha Gapaka Kurippukal", author: "Valipokkan", price: "$12.99", rating: 4.7, image: bookPlaceholder9 },
+    { id: 11, title: "Ariyappadatha Thamilagam", author: "A Ra Venkadachalapathy", price: "$11.99", rating: 4.8, image: bookPlaceholder10 }
   ];
 
   const specialOffers = [
-    { id: 11, title: "Buy 2 Get 1 Free", description: "On all fiction books", image: offerPlaceholder1 },
-    { id: 12, title: "30% Off", description: "Classic literature collection", image: offerPlaceholder2 }
+    { id: 11, title: "Buy 2 Get 1 Free", description: "On all fiction books", image: offerPlaceholder3 },
+    { id: 12, title: "30% Off", description: "Classic literature collection", image: offerPlaceholder4 }
   ];
 
   // Handlers
@@ -573,7 +577,7 @@ const Home = () => {
           maxWidth: '1000px',
           margin: '0 auto'
         }}>
-          {[...newArrivals].slice(0, 4).map(book => (
+          {[...featuredBooks].slice(0, 4).map(book => (
             <div key={book.id} style={{ textAlign: 'center' }}>
               <img src={book.image} alt={book.title} style={{ width: '120px', height: '180px', objectFit: 'cover', marginBottom: '10px' }} />
               <h3 style={{ margin: '0 0 5px', fontSize: '16px', color: textColor }}>{book.title}</h3>
@@ -607,7 +611,7 @@ const Home = () => {
           <div>
             <h3 style={{ fontSize: '28px', marginBottom: '10px' }}>Margaret Atwood</h3>
             <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '20px' }}>
-              {translations[language].language === 'en' 
+              {translations[language].language === 'ta' 
                 ? `The acclaimed author of "The Handmaid's Tale" and "Alias Grace" joins us this month for an exclusive interview.`
                 : 'பிரபல எழுத்தாளர் மார்கரெட் அட்வுட் இந்த மாதம் நமது சிறப்பு நேர்காணலில் பங்கேற்கிறார்.'}
             </p>
@@ -647,7 +651,7 @@ const Home = () => {
             <p style={{ marginBottom: '20px', color: textColor }}>
               {translations[language].language === 'en' 
                 ? "Beautifully designed physical gift cards"
-                : "அழகாக வடிவமைக்கப்பட்ட உடல் பரிசு அட்டைகள்"}
+                : "Beautifully designed physical gift cards"}
             </p>
             <button style={{
               padding: '8px 15px',
@@ -669,7 +673,7 @@ const Home = () => {
             <p style={{ marginBottom: '20px', color: textColor }}>
               {translations[language].language === 'en' 
                 ? "Instant digital gift cards via email"
-                : "உடனடி மின்னணு பரிசு அட்டைகள்"}
+                : "Instant digital gift cards via email"}
             </p>
             <button style={{
               padding: '8px 15px',
@@ -776,7 +780,7 @@ const Home = () => {
             <h3 style={{ fontSize: '20px', marginBottom: '20px' }}>Thamili Book Haven</h3>
             <p>{translations[language].language === 'en' 
               ? "Your local bookstore since 1995"
-              : "1995 முதல் உங்கள் உள்நாட்டு புத்தககம்"}</p>
+              : "Your local bookstore since 1995"}</p>
           </div>
           <div>
             <h3 style={{ fontSize: '20px', marginBottom: '20px' }}>{translations[language].quickLinks}</h3>
@@ -808,7 +812,7 @@ const Home = () => {
             <div style={{ display: 'flex', marginTop: '15px' }}>
               <input 
                 type="email" 
-                placeholder={translations[language].language === 'en' ? "Your email" : "மின்னஞ்சல்"}
+                placeholder={translations[language].language === "en" ? "Your email" : "Your email"}
                 style={{ 
                   padding: '10px',
                   border: 'none',
@@ -840,7 +844,7 @@ const Home = () => {
         <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
           <p>© 2023 Thamili Book Haven. {translations[language].language === 'en' 
             ? "All rights reserved" 
-            : "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை"}</p>
+            : "All rights reserved"}</p>
         </div>
       </footer>
 
