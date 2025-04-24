@@ -291,7 +291,7 @@ const Home = () => {
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/categories" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/Categories" style={{ color: 'white', textDecoration: 'none' }}>
                   {translations[language].categories}
                 </Link>
               </li>
