@@ -8,6 +8,9 @@ import Form from './Form';
 import Form2 from './Form2';
 import EmployeeUseRef from './EmployeeUseRef';
 import Employee from './Employee';
+import Categories from './categories';
+import NewArrivals from './NewArrivals'; 
+import Bestsellers from './Bestsellers'; 
 
 
 function App() {
@@ -19,10 +22,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/guest" element={<Guest />}/>
         <Route path="/dashbord" element={<Dashboard />}/>
+        <Route path="/categories" element={<Categories />}/>
         <Route path="/form" element={<Form />} /> 
         <Route path="/employee" element={<Employee/>} /> 
         <Route path="/form2" element={<Form2 />} />  
-        <Route path="/employeeUseRef" element={<EmployeeUseRef />} />       
+        <Route path="/employeeUseRef" element={<EmployeeUseRef />} /> 
+        <Route path="/new-arrivals" element={<NewArrivals />} />
+        <Route path="/bestsellers" element={<Bestsellers />} />      
       </Routes>
     </Router>
   );
