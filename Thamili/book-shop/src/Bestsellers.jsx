@@ -89,22 +89,47 @@ const Bestsellers = () => {
           <nav style={{ marginLeft: '40px' }}>
             <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].home}
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/Categories" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/Categories" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].categories}
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/new-arrivals" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/new-arrivals" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].newArrivals}
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/bestsellers" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/bestsellers" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  borderBottom: '2px solid #e74c3c',
+                  paddingBottom: '5px',
+                  transition: 'all 0.3s ease',
+                  fontWeight: 'bold'
+                }}>
                   {translations[language].bestsellers}
                 </Link>
               </li>
