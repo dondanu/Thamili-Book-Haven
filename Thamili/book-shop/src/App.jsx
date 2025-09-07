@@ -10,27 +10,37 @@ import EmployeeUseRef from './EmployeeUseRef';
 import Employee from './Employee';
 import Categories from './categories';
 import NewArrivals from './NewArrivals'; 
-import Bestsellers from './Bestsellers'; 
+import Bestsellers from './Bestsellers';
+import Cart, { CartProvider } from './Cart';
+import BookDetails from './BookDetails';
+import Checkout from './Checkout';
+import UserProfile from './UserProfile'; 
 
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/guest" element={<Guest />}/>
-        <Route path="/dashbord" element={<Dashboard />}/>
-        <Route path="/categories" element={<Categories />}/>
-        <Route path="/form" element={<Form />} /> 
-        <Route path="/employee" element={<Employee/>} /> 
-        <Route path="/form2" element={<Form2 />} />  
-        <Route path="/employeeUseRef" element={<EmployeeUseRef />} /> 
-        <Route path="/new-arrivals" element={<NewArrivals />} />
-        <Route path="/bestsellers" element={<Bestsellers />} />      
-      </Routes>
-    </Router>
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/guest" element={<Guest />}/>
+          <Route path="/dashbord" element={<Dashboard />}/>
+          <Route path="/categories" element={<Categories />}/>
+          <Route path="/form" element={<Form />} /> 
+          <Route path="/employee" element={<Employee/>} /> 
+          <Route path="/form2" element={<Form2 />} />  
+          <Route path="/employeeUseRef" element={<EmployeeUseRef />} /> 
+          <Route path="/new-arrivals" element={<NewArrivals />} />
+          <Route path="/bestsellers" element={<Bestsellers />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/book/:bookId" element={<BookDetails />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profile" element={<UserProfile />} />
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 
