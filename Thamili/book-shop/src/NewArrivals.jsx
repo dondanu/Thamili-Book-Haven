@@ -138,14 +138,32 @@ const NewArrivals = () => {
   };
 
   const headerFooterBg = darkMode ? '#121212' : '#2c3e50';
-  const sectionBg = darkMode ? '#2d2d2d' : '#f8f9fa';
-  const cardBg = darkMode ? '#3d3d3d' : 'lightblue';
+  const sectionBg = darkMode ? '#2d2d2d' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+  const cardBg = darkMode ? '#3d3d3d' : 'linear-gradient(145deg, #ffffff 0%, #f0f8ff 100%)';
   const textColor = darkMode ? '#f0f0f0' : '#333';
   const secondaryTextColor = darkMode ? '#b0b0b0' : '#666';
-  const buttonBg = darkMode ? '#e74c3c' : '#2c3e50';
+  const buttonBg = darkMode ? '#e74c3c' : 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
 
   return (
     <div style={themeStyles}>
+      {/* CSS Animations */}
+      <style>
+        {`
+          @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+          }
+          @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+          }
+        `}
+      </style>
       {/* Header - Same as Home.jsx */}
       <header style={{
         display: 'flex',
@@ -163,12 +181,24 @@ const NewArrivals = () => {
           <nav style={{ marginLeft: '40px' }}>
             <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].home}
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/categories" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/categories" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].categories}
                 </Link>
               </li>
@@ -177,13 +207,21 @@ const NewArrivals = () => {
                   color: 'white', 
                   textDecoration: 'none',
                   borderBottom: '2px solid #e74c3c',
-                  paddingBottom: '5px'
+                  paddingBottom: '5px',
+                  transition: 'all 0.3s ease',
+                  fontWeight: 'bold'
                 }}>
                   {translations[language].newArrivals}
                 </Link>
               </li>
               <li style={{ margin: '0 15px' }}>
-                <Link to="/bestsellers" style={{ color: 'white', textDecoration: 'none' }}>
+                <Link to="/bestsellers" style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  paddingBottom: '5px',
+                  borderBottom: '2px solid transparent',
+                  transition: 'all 0.3s ease'
+                }}>
                   {translations[language].bestsellers}
                 </Link>
               </li>
@@ -232,35 +270,64 @@ const NewArrivals = () => {
       {/* New Arrivals Banner */}
       <section style={{ 
         position: 'relative', 
-        height: '400px', 
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), url(${bannerPlaceholder})`,
+        height: '500px', 
+        background: `linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 50%, rgba(255, 107, 107, 0.9) 100%), url(${bannerPlaceholder})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundBlendMode: 'multiply',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        overflow: 'hidden'
       }}>
-        <div style={{ padding: '40px' }}>
-          <h2 style={{ fontSize: '3rem', marginBottom: '20px' }}>
+        <div style={{ 
+          padding: '40px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '20px',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+        }}>
+          <h2 style={{ 
+            fontSize: '3.5rem', 
+            marginBottom: '20px',
+            background: 'linear-gradient(45deg, #fff, #f0f8ff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+          }}>
             {translations[language].latestBooks}
           </h2>
-          <p style={{ fontSize: '1.2rem', marginBottom: '30px' }}>
+          <p style={{ 
+            fontSize: '1.3rem', 
+            marginBottom: '30px',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+          }}>
             {translations[language].exploreNew}
           </p>
           <button style={{
-            padding: '15px 40px',
-            backgroundColor: '#e74c3c',
+            padding: '18px 45px',
+            background: 'linear-gradient(45deg, #ff6b6b, #ee5a24, #ff9ff3)',
+            backgroundSize: '200% 200%',
             color: 'white',
             border: 'none',
-            borderRadius: '5px',
-            fontSize: '1.1rem',
+            borderRadius: '50px',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
             cursor: 'pointer',
-            transition: 'transform 0.3s',
-            ':hover': {
-              transform: 'scale(1.05)'
-            }
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 15px rgba(255, 107, 107, 0.4)',
+            animation: 'gradientShift 3s ease infinite'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(255, 107, 107, 0.6)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0) scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
           }}>
             {translations[language].shopNow}
           </button>
@@ -268,16 +335,49 @@ const NewArrivals = () => {
       </section>
 
       {/* New Arrivals Grid */}
-      <section style={{ padding: '60px 20px', backgroundColor: sectionBg }}>
+      <section style={{ 
+        padding: '80px 20px', 
+        background: darkMode ? sectionBg : 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Decorative elements */}
+        <div style={{
+          position: 'absolute',
+          top: '-50px',
+          left: '-50px',
+          width: '200px',
+          height: '200px',
+          background: 'linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
+          borderRadius: '50%',
+          animation: 'float 6s ease-in-out infinite'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-100px',
+          right: '-100px',
+          width: '300px',
+          height: '300px',
+          background: 'linear-gradient(45deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03))',
+          borderRadius: '50%',
+          animation: 'float 8s ease-in-out infinite reverse'
+        }}></div>
+        
         <div style={{ 
           maxWidth: '1200px',
-          margin: '0 auto'
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 2
         }}>
           <h2 style={{ 
             textAlign: 'center', 
-            marginBottom: '50px', 
-            fontSize: '2.5rem',
-            color: textColor
+            marginBottom: '60px', 
+            fontSize: '3rem',
+            background: darkMode ? 'none' : 'linear-gradient(45deg, #fff, #f0f8ff, #e6f3ff)',
+            WebkitBackgroundClip: darkMode ? 'initial' : 'text',
+            WebkitTextFillColor: darkMode ? textColor : 'transparent',
+            textShadow: darkMode ? 'none' : '2px 2px 4px rgba(0,0,0,0.3)',
+            fontWeight: 'bold'
           }}>
             {translations[language].newArrivals}
           </h2>
@@ -286,17 +386,44 @@ const NewArrivals = () => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '40px',
           }}>
-            {newArrivals.map(book => (
+            {newArrivals.map((book, index) => (
               <div key={book.id} style={{
-                backgroundColor: cardBg,
-                borderRadius: '10px',
+                background: darkMode ? cardBg : `linear-gradient(145deg, #ffffff 0%, ${['#f0f8ff', '#fff0f5', '#f0fff0', '#fff8dc'][index % 4]} 100%)`,
+                borderRadius: '20px',
                 overflow: 'hidden',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                transition: 'transform 0.3s',
-                ':hover': {
-                  transform: 'translateY(-5px)'
-                }
+                boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                border: `3px solid ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4]}`,
+                position: 'relative',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-15px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.3)';
+                e.currentTarget.style.borderColor = ['#ff4757', '#2ed573', '#3742fa', '#ffa502'][index % 4];
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+                e.currentTarget.style.borderColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4];
               }}>
+                {/* New Arrival Badge */}
+                <div style={{
+                  position: 'absolute',
+                  top: '15px',
+                  right: '15px',
+                  background: 'linear-gradient(45deg, #ff6b6b, #ee5a24)',
+                  color: 'white',
+                  padding: '8px 15px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  zIndex: 3,
+                  boxShadow: '0 4px 15px rgba(255, 107, 107, 0.4)'
+                }}>
+                  NEW!
+                </div>
+                
                 <img 
                   src={book.image} 
                   alt={book.title} 
@@ -304,8 +431,15 @@ const NewArrivals = () => {
                     width: '100%', 
                     height: '350px', 
                     objectFit: 'cover',
-                    borderBottom: '3px solid #e74c3c'
-                  }} 
+                    borderBottom: `4px solid ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4]}`,
+                    transition: 'transform 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 />
                 <div style={{ padding: '25px' }}>
                   <h3 style={{ 
@@ -352,17 +486,26 @@ const NewArrivals = () => {
                   </div>
                   <button style={{
                     width: '100%',
-                    padding: '12px',
-                    backgroundColor: buttonBg,
+                    padding: '15px',
+                    background: `linear-gradient(45deg, ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4]}, ${['#ee5a24', '#2ed573', '#3742fa', '#ffa502'][index % 4]})`,
                     color: 'white',
                     border: 'none',
-                    borderRadius: '5px',
+                    borderRadius: '25px',
                     cursor: 'pointer',
-                    fontSize: '1rem',
-                    transition: 'opacity 0.3s',
-                    ':hover': {
-                      opacity: 0.9
-                    }
+                    fontSize: '1.1rem',
+                    fontWeight: 'bold',
+                    transition: 'all 0.3s ease',
+                    boxShadow: `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`,
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 8px 25px ${['rgba(255, 107, 107, 0.6)', 'rgba(78, 205, 196, 0.6)', 'rgba(69, 183, 209, 0.6)', 'rgba(150, 206, 180, 0.6)'][index % 4]}`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`;
                   }}>
                     {translations[language].addToCart}
                   </button>
