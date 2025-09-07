@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from './Cart';
 
 // Import local placeholder images
 import bannerPlaceholder from './assets/banner-placeholder.jpg';
@@ -217,6 +218,7 @@ const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
+  const { addToCart, getTotalItems } = useCart();
 
   // Sample data
   const featuredBooks = [
@@ -366,8 +368,26 @@ const Home = () => {
               {translations[language].register}
             </Link>
           </div>
-          <Link to="/cart" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px' }}>
+          <Link to="/cart" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px', position: 'relative' }}>
             <span style={{ fontSize: '20px' }}>🛒</span>
+            {getTotalItems() > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                backgroundColor: '#e74c3c',
+                color: 'white',
+                borderRadius: '50%',
+                width: '20px',
+                height: '20px',
+                fontSize: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {getTotalItems()}
+              </span>
+            )}
           </Link>
         </div>
       </header>
@@ -479,15 +499,25 @@ const Home = () => {
                 <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor }}>{book.title}</h3>
                 <p style={{ margin: '0 0 10px', color: secondaryTextColor }}>{book.author}</p>
                 <p style={{ margin: '0 0 15px', fontWeight: 'bold', color: textColor }}>{book.price}</p>
-                <button style={{
-                  width: '100%',
-                  padding: '10px',
-                  backgroundColor: buttonBg,
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer'
-                }}>{translations[language].addToCart}</button>
+                <button 
+                  onClick={() => addToCart(book)}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: buttonBg,
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >{translations[language].addToCart}</button>
               </div>
             </div>
           ))}
@@ -535,15 +565,25 @@ const Home = () => {
                   <span style={{ marginLeft: '5px', fontSize: '14px', color: secondaryTextColor }}>{book.rating}</span>
                 </div>
                 <p style={{ margin: '0 0 15px', fontWeight: 'bold', color: textColor }}>{book.price}</p>
-                <button style={{
-                  width: '100%',
-                  padding: '10px',
-                  backgroundColor: buttonBg,
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer'
-                }}>{translations[language].addToCart}</button>
+                <button 
+                  onClick={() => addToCart(book)}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: buttonBg,
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >{translations[language].addToCart}</button>
               </div>
             </div>
           ))}
