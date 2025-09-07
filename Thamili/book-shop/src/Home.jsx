@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import QuickSearch from './QuickSearch';
 import { useCart } from './Cart';
 
 // Import local placeholder images
@@ -219,6 +220,7 @@ const Home = () => {
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
   const { addToCart, getTotalItems } = useCart();
+  const navigate = useNavigate();
 
   // Sample data
   const featuredBooks = [
@@ -336,17 +338,10 @@ const Home = () => {
           </nav>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <input 
-            type="text" 
+          <QuickSearch 
             placeholder={translations[language].searchPlaceholder}
-            style={{ 
-              padding: '7px 15px', 
-              borderRadius: '20px', 
-              border: 'none', 
-              marginRight: '15px',
-              width: '250px',
-              fontSize: `${fontSize}px`
-            }} 
+            darkMode={darkMode}
+            fontSize={fontSize}
           />
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link to="/login" style={{
@@ -496,7 +491,9 @@ const Home = () => {
             }}>
               <img src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <div style={{ padding: '15px' }}>
-                <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor }}>{book.title}</h3>
+                <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor, cursor: 'pointer' }}>{book.title}</h3>
+                </Link>
                 <p style={{ margin: '0 0 10px', color: secondaryTextColor }}>{book.author}</p>
                 <p style={{ margin: '0 0 15px', fontWeight: 'bold', color: textColor }}>{book.price}</p>
                 <button 
@@ -556,7 +553,9 @@ const Home = () => {
               }}>{translations[language].bestsellerTag}</div>
               <img src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <div style={{ padding: '15px' }}>
-                <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor }}>{book.title}</h3>
+                <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor, cursor: 'pointer' }}>{book.title}</h3>
+                </Link>
                 <p style={{ margin: '0 0 10px', color: secondaryTextColor }}>{book.author}</p>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                   {[...Array(5)].map((_, i) => (

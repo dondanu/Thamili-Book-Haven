@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Import local placeholder images
 import categoryFiction from './assets/offer-placeholder1.jpg';
@@ -97,6 +97,7 @@ const Categories = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
+  const navigate = useNavigate();
 
   // Category data
   const categories = [
@@ -255,18 +256,47 @@ const Categories = () => {
           </nav>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <input 
-            type="text" 
-            placeholder={translations[language].searchPlaceholder}
-            style={{ 
-              padding: '7px 15px', 
-              borderRadius: '20px', 
-              border: 'none', 
-              marginRight: '15px',
-              width: '250px',
-              fontSize: `${fontSize}px`
-            }} 
-          />
+          <div style={{ display: 'flex', alignItems: 'center', marginRight: '15px' }}>
+            <input 
+              type="text" 
+              placeholder={translations[language].searchPlaceholder}
+              style={{ 
+                padding: '7px 15px', 
+                borderRadius: '20px 0 0 20px', 
+                border: 'none', 
+                width: '200px',
+                fontSize: `${fontSize}px`
+              }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  const query = e.target.value;
+                  if (query.trim()) {
+                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                  }
+                }
+              }}
+            />
+            <button
+              onClick={(e) => {
+                const input = e.target.previousElementSibling;
+                const query = input.value;
+                if (query.trim()) {
+                  navigate(`/search?q=${encodeURIComponent(query)}`);
+                }
+              }}
+              style={{
+                padding: '7px 12px',
+                borderRadius: '0 20px 20px 0',
+                border: 'none',
+                background: '#e74c3c',
+                color: 'white',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              🔍
+            </button>
+          </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link to="/login" style={{
               color: 'white',

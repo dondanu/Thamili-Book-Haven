@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from './Cart';
 
 // Import local placeholder images
 import bookPlaceholder1 from './assets/book-placeholder1.png';
@@ -85,6 +86,8 @@ const NewArrivals = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
+  const { addToCart, getTotalItems } = useCart();
+  const navigate = useNavigate();
 
   // Sample new arrivals data
   const newArrivals = [
@@ -229,18 +232,47 @@ const NewArrivals = () => {
           </nav>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginRight: '15px' }}>
           <input 
             type="text" 
             placeholder={translations[language].searchPlaceholder}
             style={{ 
               padding: '7px 15px', 
-              borderRadius: '20px', 
+                borderRadius: '20px 0 0 20px', 
               border: 'none', 
-              marginRight: '15px',
-              width: '250px',
+                width: '200px',
               fontSize: `${fontSize}px`
             }} 
-          />
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  const query = e.target.value;
+                  if (query.trim()) {
+                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                  }
+                }
+              }}
+            />
+            <button
+              onClick={(e) => {
+                const input = e.target.previousElementSibling;
+                const query = input.value;
+                if (query.trim()) {
+                  navigate(`/search?q=${encodeURIComponent(query)}`);
+                }
+              }}
+              style={{
+                padding: '7px 12px',
+                borderRadius: '0 20px 20px 0',
+                border: 'none',
+                background: '#e74c3c',
+                color: 'white',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              🔍
+            </button>
+          </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link to="/login" style={{
               color: 'white',
@@ -261,8 +293,26 @@ const NewArrivals = () => {
               {translations[language].register}
             </Link>
           </div>
-          <Link to="/cart" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px' }}>
+          <Link to="/cart" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px', position: 'relative' }}>
             <span style={{ fontSize: '20px' }}>🛒</span>
+            {getTotalItems() > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                backgroundColor: '#e74c3c',
+                color: 'white',
+                borderRadius: '50%',
+                width: '20px',
+                height: '20px',
+                fontSize: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {getTotalItems()}
+              </span>
+            )}
           </Link>
         </div>
       </header>
@@ -439,17 +489,20 @@ const NewArrivals = () => {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)';
-                  }}
+                  }} 
                 />
                 <div style={{ padding: '25px' }}>
+                  <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <h3 style={{ 
                     margin: '0 0 10px', 
                     fontSize: '1.3rem',
                     color: textColor,
-                    minHeight: '60px'
+                      minHeight: '60px',
+                      cursor: 'pointer'
                   }}>
                     {book.title}
                   </h3>
+                  </Link>
                   <p style={{ 
                     margin: '0 0 10px', 
                     color: secondaryTextColor,
@@ -484,28 +537,30 @@ const NewArrivals = () => {
                       ))}
                     </div>
                   </div>
-                  <button style={{
+                  <button 
+                    onClick={() => addToCart(book)}
+                    style={{
                     width: '100%',
-                    padding: '15px',
-                    background: `linear-gradient(45deg, ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4]}, ${['#ee5a24', '#2ed573', '#3742fa', '#ffa502'][index % 4]})`,
+                      padding: '15px',
+                      background: `linear-gradient(45deg, ${['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][index % 4]}, ${['#ee5a24', '#2ed573', '#3742fa', '#ffa502'][index % 4]})`,
                     color: 'white',
                     border: 'none',
-                    borderRadius: '25px',
+                      borderRadius: '25px',
                     cursor: 'pointer',
-                    fontSize: '1.1rem',
-                    fontWeight: 'bold',
-                    transition: 'all 0.3s ease',
-                    boxShadow: `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`,
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = `0 8px 25px ${['rgba(255, 107, 107, 0.6)', 'rgba(78, 205, 196, 0.6)', 'rgba(69, 183, 209, 0.6)', 'rgba(150, 206, 180, 0.6)'][index % 4]}`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`;
+                      fontSize: '1.1rem',
+                      fontWeight: 'bold',
+                      transition: 'all 0.3s ease',
+                      boxShadow: `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`,
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = `0 8px 25px ${['rgba(255, 107, 107, 0.6)', 'rgba(78, 205, 196, 0.6)', 'rgba(69, 183, 209, 0.6)', 'rgba(150, 206, 180, 0.6)'][index % 4]}`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = `0 4px 15px ${['rgba(255, 107, 107, 0.4)', 'rgba(78, 205, 196, 0.4)', 'rgba(69, 183, 209, 0.4)', 'rgba(150, 206, 180, 0.4)'][index % 4]}`;
                   }}>
                     {translations[language].addToCart}
                   </button>

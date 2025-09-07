@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bookPlaceholder7 from './assets/book-placeholder1.png';
 import bookPlaceholder8 from './assets/book-placeholder2.png';
 import bookPlaceholder9 from './assets/book-placeholder3.png';
@@ -44,6 +44,7 @@ const Bestsellers = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
+  const navigate = useNavigate();
 
   const bestsellers = [
     { id: 1, title: "Bestseller 1", author: "Author 1", price: "$14.99", image: bookPlaceholder7 },
@@ -137,18 +138,47 @@ const Bestsellers = () => {
           </nav>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <input 
-            type="text" 
-            placeholder={translations[language].searchPlaceholder}
-            style={{ 
-              padding: '7px 15px', 
-              borderRadius: '20px', 
-              border: 'none', 
-              marginRight: '15px',
-              width: '250px',
-              fontSize: `${fontSize}px`
-            }} 
-          />
+          <div style={{ display: 'flex', alignItems: 'center', marginRight: '15px' }}>
+            <input 
+              type="text" 
+              placeholder={translations[language].searchPlaceholder}
+              style={{ 
+                padding: '7px 15px', 
+                borderRadius: '20px 0 0 20px', 
+                border: 'none', 
+                width: '200px',
+                fontSize: `${fontSize}px`
+              }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  const query = e.target.value;
+                  if (query.trim()) {
+                    navigate(`/search?q=${encodeURIComponent(query)}`);
+                  }
+                }
+              }}
+            />
+            <button
+              onClick={(e) => {
+                const input = e.target.previousElementSibling;
+                const query = input.value;
+                if (query.trim()) {
+                  navigate(`/search?q=${encodeURIComponent(query)}`);
+                }
+              }}
+              style={{
+                padding: '7px 12px',
+                borderRadius: '0 20px 20px 0',
+                border: 'none',
+                background: '#e74c3c',
+                color: 'white',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              🔍
+            </button>
+          </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link to="/login" style={{
               color: 'white',
