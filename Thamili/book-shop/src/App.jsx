@@ -14,7 +14,9 @@ import Bestsellers from './Bestsellers';
 import Cart, { CartProvider } from './Cart';
 import BookDetails from './BookDetails';
 import Checkout from './Checkout';
-import UserProfile from './UserProfile'; 
+import UserProfile from './UserProfile';
+import SearchResults from './SearchResults';
+import SearchTest from './SearchTest'; 
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/search-test" element={<SearchTest />} />
         </Routes>
       </Router>
     </CartProvider>
