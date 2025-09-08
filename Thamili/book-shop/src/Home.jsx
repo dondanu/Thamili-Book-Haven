@@ -343,6 +343,12 @@ const Home = () => {
             darkMode={darkMode}
             fontSize={fontSize}
           />
+          <Link to="/orders" style={{ color: 'white', textDecoration: 'none' }}>
+            <span style={{ fontSize: '20px' }}>📦</span>
+          </Link>
+          <Link to="/wishlist" style={{ color: 'white', textDecoration: 'none' }}>
+            <span style={{ fontSize: '20px' }}>♥</span>
+          </Link>
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link to="/login" style={{
               color: 'white',
