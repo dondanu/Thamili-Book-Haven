@@ -12,18 +12,21 @@ import Categories from './categories';
 import NewArrivals from './NewArrivals'; 
 import Bestsellers from './Bestsellers';
 import Cart, { CartProvider } from './Cart';
+import Wishlist, { WishlistProvider } from './Wishlist';
 import BookDetails from './BookDetails';
 import Checkout from './Checkout';
 import UserProfile from './UserProfile';
 import SearchResults from './SearchResults';
 import SearchTest from './SearchTest'; 
+import Orders from './Orders';
 
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <Routes>
+    <WishlistProvider>
+      <CartProvider>
+        <Router>
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -40,11 +43,14 @@ function App() {
           <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/search-test" element={<SearchTest />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/search-test" element={<SearchTest />} />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </WishlistProvider>
   );
 }
 
