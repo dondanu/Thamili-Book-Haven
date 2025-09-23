@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useWishlist } from './Wishlist';
 import bookPlaceholder7 from './assets/book-placeholder1.png';
 import bookPlaceholder8 from './assets/book-placeholder2.png';
 import bookPlaceholder9 from './assets/book-placeholder3.png';
@@ -45,6 +46,7 @@ const Bestsellers = () => {
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
   const navigate = useNavigate();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
 
   const bestsellers = [
     { id: 1, title: "Bestseller 1", author: "Author 1", price: "$14.99", image: bookPlaceholder7 },
@@ -255,7 +257,30 @@ const Bestsellers = () => {
                 }}
               />
             </div>
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px', position: 'relative' }}>
+              <button 
+                onClick={() => isInWishlist(book.id) ? removeFromWishlist(book.id) : addToWishlist(book)}
+                title={isInWishlist(book.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  right: '-15px',
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  border: 'none',
+                  background: 'white',
+                  boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: isInWishlist(book.id) ? '#e74c3c' : '#999',
+                  fontSize: '18px'
+                }}
+              >
+                {isInWishlist(book.id) ? '♥' : '♡'}
+              </button>
               <h3 style={{ 
                 fontSize: '18px', 
                 fontWeight: 'bold', 
