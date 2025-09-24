@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from './Cart';
+import { useWishlist } from './Wishlist';
 
 // Import local placeholder images
 import bookPlaceholder1 from './assets/book-placeholder1.png';
@@ -87,6 +88,7 @@ const NewArrivals = () => {
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
   const { addToCart, getTotalItems } = useCart();
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
   const navigate = useNavigate();
 
   // Sample new arrivals data
@@ -491,7 +493,30 @@ const NewArrivals = () => {
                     e.currentTarget.style.transform = 'scale(1)';
                   }} 
                 />
-                <div style={{ padding: '25px' }}>
+                <div style={{ padding: '25px', position: 'relative' }}>
+                  <button 
+                    onClick={() => isInWishlist(book.id) ? removeFromWishlist(book.id) : addToWishlist(book)}
+                    title={isInWishlist(book.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                    style={{
+                      position: 'absolute',
+                      top: '-15px',
+                      right: '-15px',
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      border: 'none',
+                      background: 'white',
+                      boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: isInWishlist(book.id) ? '#e74c3c' : '#999',
+                      fontSize: '18px'
+                    }}
+                  >
+                    {isInWishlist(book.id) ? '♥' : '♡'}
+                  </button>
                   <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <h3 style={{ 
                     margin: '0 0 10px', 
