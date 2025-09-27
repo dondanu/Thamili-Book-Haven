@@ -45,10 +45,39 @@ const Checkout = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Process order
+      // Process order and persist order history
+      try {
+        const order = {
+          id: `ORD-${Date.now()}`,
+          date: new Date().toISOString(),
+          items: cartItems.map(i => ({ id: i.id, title: i.title, author: i.author, quantity: i.quantity, price: i.price })),
+          total: getTotalPrice(),
+          shipping: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode,
+            country: formData.country
+          },
+          payment: {
+            cardLast4: formData.cardNumber ? String(formData.cardNumber).slice(-4) : '****',
+            cardName: formData.cardName
+          },
+          status: 'Processing'
+        };
+        const raw = localStorage.getItem('orderHistory');
+        const history = raw ? JSON.parse(raw) : [];
+        history.unshift(order);
+        localStorage.setItem('orderHistory', JSON.stringify(history));
+      } catch {}
+
       alert('Order placed successfully! Thank you for your purchase.');
       clearCart();
-      window.location.href = '/';
+      window.location.href = '/orders';
     }
   };
 
