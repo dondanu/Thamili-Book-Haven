@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useCart } from './Cart';
+import { useWishlist } from './Wishlist';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -33,6 +34,7 @@ const SearchResults = () => {
   ];
 
   const [filteredBooks, setFilteredBooks] = useState(allBooks);
+  const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
 
   // Filter and search logic
   useEffect(() => {
@@ -470,7 +472,33 @@ const SearchResults = () => {
                           borderBottom: `3px solid ${darkMode ? '#444' : '#f0f0f0'}`
                         }}
                       />
-                      <div style={{ padding: '20px' }}>
+                      <div style={{ padding: '20px', position: 'relative' }}>
+                        <button 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            isInWishlist(book.id) ? removeFromWishlist(book.id) : addToWishlist(book);
+                          }}
+                          title={isInWishlist(book.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                          style={{
+                            position: 'absolute',
+                            top: '-15px',
+                            right: '-15px',
+                            width: '42px',
+                            height: '42px',
+                            borderRadius: '50%',
+                            border: 'none',
+                            background: 'white',
+                            boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: isInWishlist(book.id) ? '#e74c3c' : '#999',
+                            fontSize: '18px'
+                          }}
+                        >
+                          {isInWishlist(book.id) ? '♥' : '♡'}
+                        </button>
                         <h3 style={{ 
                           margin: '0 0 10px 0', 
                           fontSize: '1.2rem',
