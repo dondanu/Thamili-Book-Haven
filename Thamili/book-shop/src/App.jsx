@@ -19,6 +19,7 @@ import UserProfile from './UserProfile';
 import SearchResults from './SearchResults';
 import SearchTest from './SearchTest'; 
 import Orders from './Orders';
+import NotFound from './NotFound';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/search-test" element={<SearchTest />} />
+          <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </CartProvider>
