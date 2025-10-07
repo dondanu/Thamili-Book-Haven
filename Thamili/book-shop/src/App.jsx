@@ -13,6 +13,8 @@ import NewArrivals from './NewArrivals';
 import Bestsellers from './Bestsellers';
 import Cart, { CartProvider } from './Cart';
 import Wishlist, { WishlistProvider } from './Wishlist';
+import { BooksProvider } from './BooksStore';
+import Admin from './Admin';
 import BookDetails from './BookDetails';
 import Checkout from './Checkout';
 import UserProfile from './UserProfile';
@@ -24,8 +26,9 @@ import NotFound from './NotFound';
 
 function App() {
   return (
-    <WishlistProvider>
-      <CartProvider>
+    <BooksProvider>
+      <WishlistProvider>
+        <CartProvider>
         <Router>
           <Routes>
           <Route path="/" element={<Home />} />
@@ -47,12 +50,14 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/search-test" element={<SearchTest />} />
           <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
-      </CartProvider>
-    </WishlistProvider>
+        </CartProvider>
+      </WishlistProvider>
+    </BooksProvider>
   );
 }
 
