@@ -278,12 +278,14 @@ const Home = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '20px',
+        padding: '16px',
         backgroundColor: headerFooterBg,
         color: 'white',
         position: 'sticky',
         top: 0,
-        zIndex: 100
+        zIndex: 100,
+        flexWrap: 'wrap',
+        gap: '12px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold' }}>Thamili Book Haven</h1>
@@ -337,7 +339,7 @@ const Home = () => {
             </ul>
           </nav>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <QuickSearch 
             placeholder={translations[language].searchPlaceholder}
             darkMode={darkMode}
@@ -495,7 +497,7 @@ const Home = () => {
                 transform: 'translateY(-5px)'
               }
             }}>
-              <img src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
+              <img loading="lazy" src={book.image} alt={book.title} style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
               <div style={{ padding: '15px' }}>
                 <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <h3 style={{ margin: '0 0 5px', fontSize: '18px', color: textColor, cursor: 'pointer' }}>{book.title}</h3>
@@ -617,7 +619,7 @@ const Home = () => {
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
               position: 'relative'
             }}>
-              <img src={offer.image} alt={offer.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <img loading="lazy" src={offer.image} alt={offer.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <div style={{ padding: '20px', textAlign: 'center' }}>
                 <h3 style={{ margin: '0 0 10px', fontSize: '24px', color: '#e74c3c' }}>{offer.title}</h3>
                 <p style={{ margin: '0 0 15px', fontSize: '16px', color: textColor }}>{offer.description}</p>
@@ -649,7 +651,7 @@ const Home = () => {
         }}>
           {[...featuredBooks].slice(0, 4).map(book => (
             <div key={book.id} style={{ textAlign: 'center' }}>
-              <img src={book.image} alt={book.title} style={{ width: '120px', height: '180px', objectFit: 'cover', marginBottom: '10px' }} />
+              <img loading="lazy" src={book.image} alt={book.title} style={{ width: '120px', height: '180px', objectFit: 'cover', marginBottom: '10px' }} />
               <h3 style={{ margin: '0 0 5px', fontSize: '16px', color: textColor }}>{book.title}</h3>
               <p style={{ margin: '0 0 10px', color: secondaryTextColor, fontSize: '14px' }}>{book.author}</p>
             </div>
@@ -673,7 +675,7 @@ const Home = () => {
           gap: '40px',
           textAlign: 'left'
         }}>
-          <img 
+          <img loading="lazy"
             src={authorPlaceholder}
             alt="Author of the Month" 
             style={{ borderRadius: '5px', width: '200px', height: '250px', objectFit: 'cover' }}

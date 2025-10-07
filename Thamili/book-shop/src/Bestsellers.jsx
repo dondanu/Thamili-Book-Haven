@@ -251,7 +251,7 @@ const Bestsellers = () => {
               overflow: 'hidden',
               position: 'relative'
             }}>
-              <img 
+              <img loading="lazy"
                 src={book.image} 
                 alt={book.title}
                 style={{ 

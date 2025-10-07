@@ -60,6 +60,18 @@ const BookDetails = () => {
 
   const book = bookData[bookId] || bookData[1]; // Default to first book if not found
 
+  // Track recently viewed
+  useEffect(() => {
+    try {
+      const key = 'recentlyViewed';
+      const raw = localStorage.getItem(key);
+      const arr = raw ? JSON.parse(raw) : [];
+      const compact = arr.filter((b) => b.id !== book.id);
+      compact.unshift({ id: book.id, title: book.title, author: book.author, price: book.price, image: book.image });
+      localStorage.setItem(key, JSON.stringify(compact.slice(0, 10)));
+    } catch {}
+  }, [book.id]);
+
   // Load and persist reviews per book
   useEffect(() => {
     try {

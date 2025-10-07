@@ -486,7 +486,7 @@ const NewArrivals = () => {
                   NEW!
                 </div>
                 
-                <img 
+                <img loading="lazy"
                   src={book.image} 
                   alt={book.title} 
                   style={{ 

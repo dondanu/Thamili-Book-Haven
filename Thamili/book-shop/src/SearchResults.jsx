@@ -462,7 +462,7 @@ const SearchResults = () => {
                     e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
                   }}>
                     <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <img 
+                      <img loading="lazy"
                         src={book.image} 
                         alt={book.title}
                         style={{
