@@ -6,6 +6,7 @@ import bookPlaceholder7 from './assets/book-placeholder1.png';
 import bookPlaceholder8 from './assets/book-placeholder2.png';
 import bookPlaceholder9 from './assets/book-placeholder3.png';
 import bookPlaceholder10 from './assets/book-placeholder4.png';
+import { useBooks } from './BooksStore';
 
 // Translations object
 const translations = {
@@ -49,13 +50,21 @@ const Bestsellers = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
+  const { books } = useBooks();
 
-  const bestsellers = [
+  const sampleBest = [
     { id: 1, title: "Bestseller 1", author: "Author 1", price: "$14.99", image: bookPlaceholder7 },
     { id: 2, title: "Bestseller 2", author: "Author 2", price: "$18.99", image: bookPlaceholder8 },
     { id: 3, title: "Bestseller 3", author: "Author 3", price: "$12.99", image: bookPlaceholder9 },
     { id: 4, title: "Bestseller 4", author: "Author 4", price: "$16.99", image: bookPlaceholder10 },
   ];
+  const bestsellers = (books && books.length ? books.slice(0, 8) : sampleBest).map((b, idx) => ({
+    id: b.id ?? idx + 1,
+    title: b.title,
+    author: b.author,
+    price: b.price,
+    image: b.image || [bookPlaceholder7, bookPlaceholder8, bookPlaceholder9, bookPlaceholder10][idx % 4]
+  }));
 
   // Handlers
   const increaseFontSize = () => setFontSize(prev => Math.min(24, prev + 2));

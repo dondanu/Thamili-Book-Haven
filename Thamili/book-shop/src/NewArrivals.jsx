@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useBooks } from './BooksStore';
 import { useCart } from './Cart';
 import { useWishlist } from './Wishlist';
 
@@ -91,8 +92,9 @@ const NewArrivals = () => {
   const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
   const navigate = useNavigate();
 
-  // Sample new arrivals data
-  const newArrivals = [
+  const { books } = useBooks();
+  // Data source: admin books fallback to sample data
+  const sampleArrivals = [
     { 
       id: 1, 
       title: "ANILAADUM MUNDRIL", 
@@ -126,6 +128,14 @@ const NewArrivals = () => {
       rating: 4.6
     }
   ];
+  const newArrivals = (books && books.length ? books.slice(0, 8) : sampleArrivals).map((b, idx) => ({
+    id: b.id ?? idx + 1,
+    title: b.title,
+    author: b.author,
+    price: b.price,
+    image: b.image || [bookPlaceholder1, bookPlaceholder2, bookPlaceholder3, bookPlaceholder4][idx % 4],
+    rating: b.rating ?? 4.5
+  }));
 
   // Handlers
   const increaseFontSize = () => setFontSize(prev => Math.min(24, prev + 2));
