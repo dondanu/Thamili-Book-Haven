@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import QuickSearch from './QuickSearch';
 import { useCart } from './Cart';
@@ -219,6 +219,7 @@ const Home = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
+  const [recentlyViewed, setRecentlyViewed] = useState([]);
   const { addToCart, getTotalItems } = useCart();
   const navigate = useNavigate();
 
@@ -254,6 +255,15 @@ const Home = () => {
   const decreaseFontSize = () => setFontSize(prev => Math.max(12, prev - 2));
   const toggleDarkMode = () => setDarkMode(!darkMode);
   const handleLanguageChange = (e) => setLanguage(e.target.value);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('recentlyViewed');
+      setRecentlyViewed(raw ? JSON.parse(raw) : []);
+    } catch {
+      setRecentlyViewed([]);
+    }
+  }, []);
 
   // Styles
   const themeStyles = {
@@ -435,6 +445,33 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Recently Viewed */}
+      {recentlyViewed.length > 0 && (
+        <section style={{ padding: '40px 20px', backgroundColor: darkMode ? '#1a1a1a' : 'white' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '30px', fontSize: '32px', color: textColor }}>
+            Recently Viewed
+          </h2>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: '20px',
+            maxWidth: '1000px',
+            margin: '0 auto'
+          }}>
+            {recentlyViewed.slice(0, 8).map((book) => (
+              <div key={book.id} style={{ textAlign: 'center' }}>
+                <img loading="lazy" src={book.image} alt={book.title} style={{ width: '120px', height: '180px', objectFit: 'cover', marginBottom: '10px' }} />
+                <Link to={`/book/${book.id}`} style={{ textDecoration: 'none', color: textColor }}>
+                  <h3 style={{ margin: '0 0 5px', fontSize: '16px' }}>{book.title}</h3>
+                </Link>
+                <p style={{ margin: '0 0 6px', color: secondaryTextColor, fontSize: '14px' }}>{book.author}</p>
+                <p style={{ margin: 0, color: textColor, fontWeight: 'bold' }}>{book.price}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Featured Categories */}
       <section style={{ padding: '40px 20px', backgroundColor: sectionBg }}>
