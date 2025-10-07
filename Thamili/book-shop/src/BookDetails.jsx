@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useCart } from './Cart';
 
@@ -7,6 +7,11 @@ const BookDetails = () => {
   const { addToCart } = useCart();
   const [darkMode, setDarkMode] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [reviews, setReviews] = useState([]);
+  const [reviewName, setReviewName] = useState('');
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState('');
+  const [formError, setFormError] = useState('');
 
   // Sample book data - in real app, this would come from API
   const bookData = {
@@ -54,6 +59,30 @@ const BookDetails = () => {
   };
 
   const book = bookData[bookId] || bookData[1]; // Default to first book if not found
+
+  // Load and persist reviews per book
+  useEffect(() => {
+    try {
+      const key = `reviews:${book.id}`;
+      const raw = localStorage.getItem(key);
+      const initial = raw ? JSON.parse(raw) : (book.reviews || []);
+      setReviews(initial);
+    } catch {
+      setReviews(book.reviews || []);
+    }
+  }, [book.id]);
+
+  const saveReviews = (next) => {
+    try {
+      localStorage.setItem(`reviews:${book.id}`, JSON.stringify(next));
+    } catch {}
+  };
+
+  const averageRating = useMemo(() => {
+    if (!reviews.length) return 0;
+    const sum = reviews.reduce((a, r) => a + (r.rating || 0), 0);
+    return Math.round((sum / reviews.length) * 10) / 10; // one decimal
+  }, [reviews]);
 
   const handleAddToCart = () => {
     for (let i = 0; i < selectedQuantity; i++) {
@@ -203,7 +232,7 @@ const BookDetails = () => {
                   <span 
                     key={i} 
                     style={{ 
-                      color: i < Math.floor(book.rating) ? '#f39c12' : '#ddd',
+                      color: i < Math.floor(averageRating) ? '#f39c12' : '#ddd',
                       fontSize: '1.5rem'
                     }}
                   >
@@ -216,7 +245,7 @@ const BookDetails = () => {
                 color: darkMode ? '#b0b0b0' : '#666',
                 marginLeft: '10px'
               }}>
-                {book.rating} ({book.reviews.length} reviews)
+                {averageRating || '0.0'} ({reviews.length} reviews)
               </span>
             </div>
 
@@ -418,8 +447,8 @@ const BookDetails = () => {
             Customer Reviews
           </h2>
           
-          <div style={{ display: 'grid', gap: '20px' }}>
-            {book.reviews.map(review => (
+          <div style={{ display: 'grid', gap: '20px', marginBottom: '30px' }}>
+            {reviews.map(review => (
               <div key={review.id} style={{
                 background: darkMode ? '#2d2d2d' : 'white',
                 borderRadius: '15px',
@@ -458,6 +487,85 @@ const BookDetails = () => {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Add Review Form */}
+          <div style={{
+            background: darkMode ? '#2d2d2d' : 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+            border: `2px solid ${darkMode ? '#444' : '#f0f0f0'}`
+          }}>
+            <h3 style={{ marginTop: 0, marginBottom: '15px' }}>Write a Review</h3>
+            {formError && (
+              <div style={{ color: '#e74c3c', marginBottom: '10px' }}>{formError}</div>
+            )}
+            <div style={{ display: 'grid', gap: '12px' }}>
+              <input
+                type="text"
+                placeholder="Your name"
+                value={reviewName}
+                onChange={(e) => setReviewName(e.target.value)}
+                style={{ padding: '10px', borderRadius: '8px', border: `2px solid ${darkMode ? '#555' : '#ddd'}` }}
+              />
+              <div>
+                <span style={{ marginRight: '10px' }}>Your rating:</span>
+                {[1,2,3,4,5].map(star => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setReviewRating(star)}
+                    aria-label={`Rate ${star} star${star>1?'s':''}`}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '22px',
+                      color: star <= reviewRating ? '#f39c12' : '#ddd'
+                    }}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+              <textarea
+                rows={4}
+                placeholder="Write your review..."
+                value={reviewComment}
+                onChange={(e) => setReviewComment(e.target.value)}
+                style={{ padding: '10px', borderRadius: '8px', border: `2px solid ${darkMode ? '#555' : '#ddd'}`, resize: 'vertical' }}
+              />
+              <button
+                onClick={() => {
+                  setFormError('');
+                  if (!reviewName.trim()) return setFormError('Please enter your name.');
+                  if (reviewRating < 1 || reviewRating > 5) return setFormError('Please select a rating.');
+                  if (!reviewComment.trim()) return setFormError('Please write a comment.');
+                  const next = [
+                    { id: Date.now(), name: reviewName.trim(), rating: reviewRating, comment: reviewComment.trim() },
+                    ...reviews
+                  ];
+                  setReviews(next);
+                  saveReviews(next);
+                  setReviewName('');
+                  setReviewRating(0);
+                  setReviewComment('');
+                }}
+                style={{
+                  padding: '12px 18px',
+                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  width: '180px'
+                }}
+              >
+                Submit Review
+              </button>
+            </div>
           </div>
         </div>
       </div>
