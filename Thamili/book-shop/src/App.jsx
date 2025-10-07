@@ -8,7 +8,7 @@ import Form from './Form';
 import Form2 from './Form2';
 import EmployeeUseRef from './EmployeeUseRef';
 import Employee from './Employee';
-import Categories from './categories';
+import Categories from './Categories';
 import NewArrivals from './NewArrivals'; 
 import Bestsellers from './Bestsellers';
 import Cart, { CartProvider } from './Cart';

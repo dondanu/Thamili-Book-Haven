@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from './Cart';
 import { useWishlist } from './Wishlist';
 import bookPlaceholder7 from './assets/book-placeholder1.png';
 import bookPlaceholder8 from './assets/book-placeholder2.png';
@@ -46,6 +47,7 @@ const Bestsellers = () => {
   const [fontSize, setFontSize] = useState(17);
   const [language, setLanguage] = useState('en');
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const { addToWishlist, isInWishlist, removeFromWishlist } = useWishlist();
 
   const bestsellers = [
@@ -310,7 +312,7 @@ const Bestsellers = () => {
                 }}>
                   {book.price}
                 </span>
-                <button style={{
+                <button onClick={() => addToCart(book)} style={{
                   backgroundColor: '#2c5530',
                   color: 'white',
                   border: 'none',
