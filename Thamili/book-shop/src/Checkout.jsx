@@ -6,6 +6,9 @@ const Checkout = () => {
   const { cartItems, getTotalPrice, clearCart } = useCart();
   const [darkMode, setDarkMode] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponError, setCouponError] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [formData, setFormData] = useState({
     // Shipping Information
     firstName: '',
@@ -47,11 +50,18 @@ const Checkout = () => {
     } else {
       // Process order and persist order history
       try {
+        const subtotal = getTotalPrice();
+        const discountAmount = appliedCoupon ? appliedCoupon.type === 'percent' ? Number((subtotal * appliedCoupon.value).toFixed(2)) : appliedCoupon.value : 0;
+        const finalTotal = Math.max(0, Number((subtotal - discountAmount).toFixed(2)));
+
         const order = {
           id: `ORD-${Date.now()}`,
           date: new Date().toISOString(),
           items: cartItems.map(i => ({ id: i.id, title: i.title, author: i.author, quantity: i.quantity, price: i.price })),
-          total: getTotalPrice(),
+          subtotal,
+          discount: discountAmount,
+          total: finalTotal,
+          coupon: appliedCoupon ? appliedCoupon.code : null,
           shipping: {
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -401,6 +411,38 @@ const Checkout = () => {
             </span>
           </div>
         ))}
+        <div style={{ marginTop: '15px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <input
+            type="text"
+            placeholder="Coupon code"
+            value={couponCode}
+            onChange={(e) => { setCouponCode(e.target.value); setCouponError(''); }}
+            style={{ flex: 1, padding: '10px', borderRadius: '8px', border: `2px solid ${darkMode ? '#444' : '#ddd'}` }}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              setCouponError('');
+              const code = couponCode.trim().toUpperCase();
+              if (!code) { setCouponError('Enter a coupon code.'); return; }
+              // Demo coupons
+              const coupons = {
+                SAVE10: { code: 'SAVE10', type: 'percent', value: 0.10, label: '10% off' },
+                FLAT5: { code: 'FLAT5', type: 'flat', value: 5.00, label: '$5 off' }
+              };
+              const c = coupons[code];
+              if (!c) { setCouponError('Invalid coupon code.'); return; }
+              setAppliedCoupon(c);
+            }}
+            style={{ padding: '10px 14px', borderRadius: '8px', border: 'none', background: '#667eea', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            Apply
+          </button>
+        </div>
+        {couponError && <div style={{ color: '#e74c3c', marginTop: '8px' }}>{couponError}</div>}
+        {appliedCoupon && (
+          <div style={{ marginTop: '10px', color: '#2ed573' }}>Applied: {appliedCoupon.code} ({appliedCoupon.label})</div>
+        )}
         <div style={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
@@ -409,10 +451,18 @@ const Checkout = () => {
           borderTop: `2px solid ${darkMode ? '#444' : '#ddd'}`,
           marginTop: '15px'
         }}>
-          <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Total:</span>
-          <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#e74c3c' }}>
-            ${getTotalPrice().toFixed(2)}
-          </span>
+          <div style={{ display: 'grid', gap: 6 }}>
+            <div>Subtotal: ${getTotalPrice().toFixed(2)}</div>
+            <div>Discount: -${(appliedCoupon ? (appliedCoupon.type === 'percent' ? (getTotalPrice()*appliedCoupon.value) : appliedCoupon.value) : 0).toFixed(2)}</div>
+            <div style={{ fontWeight: 'bold' }}>Total:</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#e74c3c' }}>
+              ${Math.max(0, (getTotalPrice() - (appliedCoupon ? (appliedCoupon.type === 'percent' ? (getTotalPrice()*appliedCoupon.value) : appliedCoupon.value) : 0))).toFixed(2)}
+            </div>
+          </div>
         </div>
       </div>
 
