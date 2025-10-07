@@ -26,6 +26,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <Link to="/" style={{ position: 'fixed', top: 16, right: 16, background: '#2c3e50', color: 'white', textDecoration: 'none', padding: '8px 12px', borderRadius: 6 }}>
+        Home
+      </Link>
       <div className="login-left">
         <motion.div
           initial={{ opacity: 0, x: -50 }}

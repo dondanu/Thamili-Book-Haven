@@ -39,6 +39,9 @@ const Register = () => {
       margin: '0',
       fontFamily: 'Arial, sans-serif'
     }}>
+      <Link to="/" style={{ position: 'fixed', top: 16, right: 16, background: '#2c3e50', color: 'white', textDecoration: 'none', padding: '8px 12px', borderRadius: 6 }}>
+        Home
+      </Link>
       <div style={{
         width: '100%',
         maxWidth: '1200px',
