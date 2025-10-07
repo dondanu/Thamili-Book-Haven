@@ -5,6 +5,14 @@ const Orders = () => {
 	const [darkMode, setDarkMode] = useState(false);
 	const [orders, setOrders] = useState([]);
 
+	const updateOrderStatus = (orderId, nextStatus) => {
+		setOrders(prev => {
+			const updated = prev.map(o => o.id === orderId ? { ...o, status: nextStatus } : o);
+			try { localStorage.setItem('orderHistory', JSON.stringify(updated)); } catch {}
+			return updated;
+		});
+	};
+
 	useEffect(() => {
 		try {
 			const raw = localStorage.getItem('orderHistory');
@@ -19,6 +27,8 @@ const Orders = () => {
 		color: darkMode ? '#f0f0f0' : '#333',
 		minHeight: '100vh'
 	};
+
+	const timelineSteps = ['Processing', 'Shipped', 'Delivered'];
 
 	return (
 		<div style={themeStyles}>
@@ -48,6 +58,28 @@ const Orders = () => {
 									<div style={{ textAlign: 'right' }}>
 										<p style={{ margin: 0, fontWeight: 'bold', color: '#e74c3c' }}>${order.total.toFixed(2)}</p>
 										<span style={{ padding: '4px 12px', borderRadius: '14px', background: '#f39c12', color: 'white', fontSize: '12px', fontWeight: 'bold' }}>{order.status}</span>
+									</div>
+								</div>
+
+								{/* Timeline */}
+								<div style={{ padding: '14px 20px', borderBottom: `1px solid ${darkMode ? '#444' : '#eee'}` }}>
+									<div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+										{timelineSteps.map((step, idx) => {
+											const active = timelineSteps.indexOf(order.status) >= idx;
+											return (
+												<div key={step} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+													<div style={{ width: 26, height: 26, borderRadius: '50%', background: active ? '#2ed573' : '#ddd', color: active ? 'white' : '#666', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 'bold' }}>{idx+1}</div>
+													<span style={{ color: active ? (darkMode ? '#f0f0f0' : '#333') : (darkMode ? '#777' : '#999'), fontSize: 14 }}>{step}</span>
+													{idx < timelineSteps.length - 1 && <div style={{ width: 40, height: 2, background: active ? '#2ed573' : '#ddd' }} />}
+												</div>
+											);
+										})}
+									</div>
+									{/* Quick status actions (for demo) */}
+									<div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
+										{timelineSteps.map(s => (
+											<button key={s} onClick={() => updateOrderStatus(order.id, s)} style={{ padding: '6px 10px', borderRadius: 8, border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontSize: 12 }}>{s}</button>
+										))}
 									</div>
 								</div>
 								<div style={{ padding: '16px 20px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
