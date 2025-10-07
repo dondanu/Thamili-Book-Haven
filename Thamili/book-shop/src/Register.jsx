@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaBook } from 'react-icons/fa';
+import { useAuth } from './Auth';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,18 +13,21 @@ const Register = () => {
     phoneNumber: '',
     favoriteBook: ''
   });
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    alert('Registration Successful!');
+    await register({ username: formData.username, email: formData.email, password: formData.password });
+    navigate('/');
   };
 
   return (

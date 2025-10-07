@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import './Login.css';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'; // Import Link for routing
+import { Link, useNavigate } from 'react-router-dom'; // Import Link for routing
+import { useAuth } from './Auth';
 
 // Import your image from the assets folder
 import loginImage from './assets/namu2.png'; // Adjust the path if necessary
@@ -10,10 +11,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
+    await login({ email, password });
+    navigate('/');
   };
 
   const toggleTheme = () => {

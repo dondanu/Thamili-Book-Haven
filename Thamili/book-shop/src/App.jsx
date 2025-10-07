@@ -15,6 +15,7 @@ import Cart, { CartProvider } from './Cart';
 import Wishlist, { WishlistProvider } from './Wishlist';
 import { BooksProvider } from './BooksStore';
 import Admin from './Admin';
+import { AuthProvider } from './Auth';
 import BookDetails from './BookDetails';
 import Checkout from './Checkout';
 import UserProfile from './UserProfile';
@@ -26,9 +27,10 @@ import NotFound from './NotFound';
 
 function App() {
   return (
-    <BooksProvider>
-      <WishlistProvider>
-        <CartProvider>
+    <AuthProvider>
+      <BooksProvider>
+        <WishlistProvider>
+          <CartProvider>
         <Router>
           <Routes>
           <Route path="/" element={<Home />} />
@@ -52,12 +54,13 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/search-test" element={<SearchTest />} />
-          <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
-        </CartProvider>
-      </WishlistProvider>
-    </BooksProvider>
+          </CartProvider>
+        </WishlistProvider>
+      </BooksProvider>
+    </AuthProvider>
   );
 }
 
