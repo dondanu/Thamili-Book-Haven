@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import logo from './assets/react.svg';
 
 const Invoice = () => {
 	const { orderId } = useParams();
@@ -35,15 +36,21 @@ const Invoice = () => {
 	}
 
 	return (
-		<div style={{ maxWidth: 800, margin: '0 auto', padding: 24, background: 'white' }}>
-			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-				<h2 style={{ margin: 0 }}>Invoice #{order.id}</h2>
-				<button onClick={() => window.print()} style={{ padding: '8px 12px', borderRadius: 6, border: '1px solid #ddd', background: '#f9fafb', cursor: 'pointer' }}>Print</button>
-			</div>
-			<p style={{ color: '#666' }}>{new Date(order.date).toLocaleString()}</p>
+    <div style={{ maxWidth: 800, margin: '0 auto', padding: 24, background: 'white', color: '#111' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <img src={logo} alt="Thamili Book Haven" width={36} height={36} />
+          <h2 style={{ margin: 0 }}>Thamili Book Haven</h2>
+        </div>
+        <button onClick={() => window.print()} style={{ padding: '8px 12px', borderRadius: 6, border: '1px solid #ddd', background: '#f9fafb', cursor: 'pointer' }}>Print</button>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 10 }}>
+        <h3 style={{ margin: 0 }}>Invoice #{order.id}</h3>
+        <p style={{ color: '#666', margin: 0 }}>{new Date(order.date).toLocaleString()}</p>
+      </div>
 
 			<hr />
-			<h3>Bill To</h3>
+      <h3>Bill To</h3>
 			<p style={{ margin: 0 }}>{order.shipping.firstName} {order.shipping.lastName}</p>
 			<p style={{ margin: 0 }}>{order.shipping.address}</p>
 			<p style={{ margin: 0 }}>{order.shipping.city}, {order.shipping.state} {order.shipping.zipCode}</p>

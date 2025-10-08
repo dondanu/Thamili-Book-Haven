@@ -454,7 +454,12 @@ const BookDetails = () => {
           <h2 style={{ fontSize: '1.6rem', marginBottom: '20px', color: darkMode ? '#f0f0f0' : '#333' }}>You might also like</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
             {Object.values(bookData)
-              .filter((b) => b.id !== book.id && (b.category === book.category || b.author === book.author))
+              .filter((b) => b.id !== book.id)
+              .map((b) => ({
+                ...b,
+                _score: (b.category === book.category ? 2 : 0) + (b.author === book.author ? 1 : 0) + ((b.rating || 0) / 5)
+              }))
+              .sort((a, b) => b._score - a._score)
               .slice(0, 6)
               .map((b) => (
                 <Link key={b.id} to={`/book/${b.id}`} style={{ textDecoration: 'none', color: darkMode ? '#f0f0f0' : '#333' }}>

@@ -87,6 +87,28 @@ const Checkout = () => {
         localStorage.setItem('orderHistory', JSON.stringify(history));
       } catch {}
 
+      // Simulated email notifications
+      try {
+        const emails = JSON.parse(localStorage.getItem('emails') || '[]');
+        emails.push({
+          id: `MAIL-${Date.now()}`,
+          to: formData.email,
+          subject: `Order Confirmation - ${order.id}`,
+          body: `Thank you for your purchase! Your order ${order.id} totals $${finalTotal.toFixed(2)}.`,
+          date: new Date().toISOString()
+        });
+        if (order.gift?.isGift && order.gift.recipientEmail) {
+          emails.push({
+            id: `MAIL-${Date.now()}-GIFT`,
+            to: order.gift.recipientEmail,
+            subject: `A gift for you from ${formData.firstName}`,
+            body: `${order.gift.message || 'You received a gift!'} Scheduled: ${order.gift.deliveryDate || 'Immediate'}`,
+            date: new Date().toISOString()
+          });
+        }
+        localStorage.setItem('emails', JSON.stringify(emails));
+      } catch {}
+
       alert('Order placed successfully! Thank you for your purchase.');
       clearCart();
       window.location.href = '/orders';
