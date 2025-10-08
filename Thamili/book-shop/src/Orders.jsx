@@ -98,6 +98,12 @@ const Orders = () => {
 										<p style={{ margin: 0 }}>{order.shipping.address}</p>
 										<p style={{ margin: 0 }}>{order.shipping.city}, {order.shipping.state} {order.shipping.zipCode}</p>
 										<p style={{ margin: 0 }}>{order.shipping.country}</p>
+										{order.coupon && <p style={{ margin: '8px 0 0', color: '#2ed573' }}>Coupon: {order.coupon}</p>}
+										<div style={{ marginTop: 10 }}>
+											<div>Subtotal: ${Number(order.subtotal ?? order.total).toFixed(2)}</div>
+											<div>Discount: -${Number(order.discount ?? 0).toFixed(2)}</div>
+											<div style={{ fontWeight: 'bold' }}>Total: ${Number(order.total).toFixed(2)}</div>
+										</div>
 									</div>
 								</div>
 							</div>

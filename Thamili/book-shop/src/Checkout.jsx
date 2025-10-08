@@ -34,6 +34,7 @@ const Checkout = () => {
     billingState: '',
     billingZipCode: ''
   });
+  const [giftOptions, setGiftOptions] = useState({ isGift: false, recipientName: '', recipientEmail: '', message: '', deliveryDate: '' });
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -62,6 +63,7 @@ const Checkout = () => {
           discount: discountAmount,
           total: finalTotal,
           coupon: appliedCoupon ? appliedCoupon.code : null,
+          gift: giftOptions.isGift ? { ...giftOptions } : null,
           shipping: {
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -492,6 +494,31 @@ const Checkout = () => {
         <p>Card ending in: ****{formData.cardNumber.slice(-4)}</p>
         <p>Expires: {formData.expiryDate}</p>
         <p>Cardholder: {formData.cardName}</p>
+      </div>
+
+      {/* Gift Options */}
+      <div style={{
+        background: darkMode ? '#2d2d2d' : '#f8f9fa',
+        borderRadius: '15px',
+        padding: '25px',
+        marginTop: '20px'
+      }}>
+        <h3 style={{ marginTop: 0, marginBottom: 10 }}>Gift Options</h3>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+          <input type="checkbox" checked={giftOptions.isGift} onChange={(e) => setGiftOptions({ ...giftOptions, isGift: e.target.checked })} />
+          This order is a gift
+        </label>
+        {giftOptions.isGift && (
+          <div style={{ display: 'grid', gap: 12 }}>
+            <input type="text" placeholder="Recipient name" value={giftOptions.recipientName} onChange={(e) => setGiftOptions({ ...giftOptions, recipientName: e.target.value })} style={{ padding: 10, borderRadius: 8, border: `2px solid ${darkMode ? '#444' : '#ddd'}` }} />
+            <input type="email" placeholder="Recipient email (optional)" value={giftOptions.recipientEmail} onChange={(e) => setGiftOptions({ ...giftOptions, recipientEmail: e.target.value })} style={{ padding: 10, borderRadius: 8, border: `2px solid ${darkMode ? '#444' : '#ddd'}` }} />
+            <textarea rows={3} placeholder="Personal message (optional)" value={giftOptions.message} onChange={(e) => setGiftOptions({ ...giftOptions, message: e.target.value })} style={{ padding: 10, borderRadius: 8, border: `2px solid ${darkMode ? '#444' : '#ddd'}`, resize: 'vertical' }} />
+            <div>
+              <label style={{ display: 'block', marginBottom: 6 }}>Schedule delivery (optional)</label>
+              <input type="date" value={giftOptions.deliveryDate} onChange={(e) => setGiftOptions({ ...giftOptions, deliveryDate: e.target.value })} style={{ padding: 10, borderRadius: 8, border: `2px solid ${darkMode ? '#444' : '#ddd'}` }} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
