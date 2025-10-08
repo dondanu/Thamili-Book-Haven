@@ -91,21 +91,32 @@ const Orders = () => {
 												<span>${(parseFloat(item.price.replace('$','')) * item.quantity).toFixed(2)}</span>
 											</div>
 										))}
-									</div>
+								</div>
 									<div>
 										<h4 style={{ margin: '0 0 8px' }}>Shipping</h4>
 										<p style={{ margin: 0 }}>{order.shipping.firstName} {order.shipping.lastName}</p>
 										<p style={{ margin: 0 }}>{order.shipping.address}</p>
 										<p style={{ margin: 0 }}>{order.shipping.city}, {order.shipping.state} {order.shipping.zipCode}</p>
 										<p style={{ margin: 0 }}>{order.shipping.country}</p>
+										{order.gift?.isGift && (
+											<div style={{ marginTop: 10, padding: 12, borderRadius: 8, background: darkMode ? '#1f1f1f' : '#f4f6f8', border: `1px solid ${darkMode ? '#444' : '#e3e7eb'}` }}>
+												<h5 style={{ margin: '0 0 6px' }}>Gift Details</h5>
+												<p style={{ margin: 0 }}>Recipient: {order.gift.recipientName || '-'} {order.gift.recipientEmail ? `(${order.gift.recipientEmail})` : ''}</p>
+												{order.gift.message && <p style={{ margin: '6px 0 0' }}>Message: {order.gift.message}</p>}
+												{order.gift.deliveryDate && <p style={{ margin: '6px 0 0' }}>Scheduled: {order.gift.deliveryDate}</p>}
+											</div>
+										)}
 										{order.coupon && <p style={{ margin: '8px 0 0', color: '#2ed573' }}>Coupon: {order.coupon}</p>}
 										<div style={{ marginTop: 10 }}>
 											<div>Subtotal: ${Number(order.subtotal ?? order.total).toFixed(2)}</div>
 											<div>Discount: -${Number(order.discount ?? 0).toFixed(2)}</div>
 											<div style={{ fontWeight: 'bold' }}>Total: ${Number(order.total).toFixed(2)}</div>
 										</div>
-									</div>
 								</div>
+								</div>
+							<div style={{ padding: '0 20px 16px' }}>
+								<Link to={`/invoice/${order.id}`} style={{ textDecoration: 'none', border: '1px solid #ddd', padding: '8px 12px', borderRadius: 8 }}>View Invoice / Print</Link>
+							</div>
 							</div>
 						))}
 					</div>

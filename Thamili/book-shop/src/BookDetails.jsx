@@ -449,6 +449,27 @@ const BookDetails = () => {
           </div>
         </div>
 
+        {/* Recommendations */}
+        <div style={{ marginTop: '50px' }}>
+          <h2 style={{ fontSize: '1.6rem', marginBottom: '20px', color: darkMode ? '#f0f0f0' : '#333' }}>You might also like</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 16 }}>
+            {Object.values(bookData)
+              .filter((b) => b.id !== book.id && (b.category === book.category || b.author === book.author))
+              .slice(0, 6)
+              .map((b) => (
+                <Link key={b.id} to={`/book/${b.id}`} style={{ textDecoration: 'none', color: darkMode ? '#f0f0f0' : '#333' }}>
+                  <div style={{ background: darkMode ? '#2d2d2d' : 'white', borderRadius: 10, border: `1px solid ${darkMode ? '#444' : '#eee'}`, overflow: 'hidden' }}>
+                    <img loading="lazy" src={b.image} alt={b.title} style={{ width: '100%', height: 180, objectFit: 'cover' }} />
+                    <div style={{ padding: 10 }}>
+                      <div style={{ fontWeight: 'bold', fontSize: 14, marginBottom: 6 }}>{b.title}</div>
+                      <div style={{ fontSize: 12, color: darkMode ? '#b0b0b0' : '#666' }}>{b.author}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+          </div>
+        </div>
+
         {/* Reviews Section */}
         <div style={{ marginTop: '60px' }}>
           <h2 style={{ 
