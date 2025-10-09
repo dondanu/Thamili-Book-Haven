@@ -24,6 +24,7 @@ import SearchTest from './SearchTest';
 import Orders from './Orders';
 import NotFound from './NotFound';
 import Invoice from './Invoice';
+import Emails from './Emails';
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/invoice/:orderId" element={<Invoice />} />
+            <Route path="/emails" element={<Emails />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/search-test" element={<SearchTest />} />
