@@ -27,6 +27,21 @@ export const WishlistProvider = ({ children }) => {
 
 	const isInWishlist = (bookId) => wishlistItems.some((b) => b.id === bookId);
 
+	// price alerts keyed by id -> target number
+	const [priceAlerts, setPriceAlerts] = useState(() => {
+		try {
+			return JSON.parse(localStorage.getItem('wishlistAlerts') || '{}');
+		} catch { return {}; }
+	});
+
+	useEffect(() => {
+		try { localStorage.setItem('wishlistAlerts', JSON.stringify(priceAlerts)); } catch {}
+	}, [priceAlerts]);
+
+	const setAlertPrice = (id, target) => {
+		setPriceAlerts((prev) => ({ ...prev, [id]: target }));
+	};
+
 	const addToWishlist = (book) => {
 		setWishlistItems((prev) => {
 			if (prev.some((b) => b.id === book.id)) return prev;
@@ -41,14 +56,14 @@ export const WishlistProvider = ({ children }) => {
 	const clearWishlist = () => setWishlistItems([]);
 
 	return (
-		<WishlistContext.Provider value={{ wishlistItems, addToWishlist, removeFromWishlist, clearWishlist, isInWishlist }}>
+		<WishlistContext.Provider value={{ wishlistItems, addToWishlist, removeFromWishlist, clearWishlist, isInWishlist, priceAlerts, setAlertPrice }}>
 			{children}
 		</WishlistContext.Provider>
 	);
 };
 
 const Wishlist = () => {
-	const { wishlistItems, removeFromWishlist, clearWishlist } = useWishlist();
+	const { wishlistItems, removeFromWishlist, clearWishlist, priceAlerts, setAlertPrice } = useWishlist();
 	const [darkMode, setDarkMode] = useState(false);
 
 	const themeStyles = {
@@ -87,9 +102,21 @@ const Wishlist = () => {
 									<div style={{ padding: '15px' }}>
 										<h3 style={{ margin: '0 0 6px', fontSize: '1.1rem' }}>{book.title}</h3>
 										<p style={{ margin: '0 0 10px', color: darkMode ? '#b0b0b0' : '#666' }}>by {book.author}</p>
-										<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+									<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 											<span style={{ fontWeight: 'bold', color: '#e74c3c' }}>{book.price}</span>
 											<button onClick={() => removeFromWishlist(book.id)} style={{ border: 'none', background: 'transparent', color: '#e74c3c', cursor: 'pointer', textDecoration: 'underline' }}>Remove</button>
+										</div>
+										<div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
+											<input
+												type="number"
+												min="0"
+												step="0.01"
+												value={priceAlerts[book.id] ?? ''}
+												onChange={(e) => setAlertPrice(book.id, e.target.value)}
+												placeholder="Target price"
+												style={{ padding: 8, borderRadius: 6, border: '1px solid #ddd', width: '50%' }}
+											/>
+											<small style={{ color: '#666', alignSelf: 'center' }}>Get alert when price drops to this value</small>
 										</div>
 									</div>
 								</div>
